@@ -1,0 +1,10 @@
+package it.jac.corsojava.distributore;
+
+public class Distributore {
+	
+	String codice;
+	int acquaNaturale;
+	int merendine;
+	int the;
+	
+}

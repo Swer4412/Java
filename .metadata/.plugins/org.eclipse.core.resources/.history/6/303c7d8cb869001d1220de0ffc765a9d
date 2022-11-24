@@ -1,0 +1,37 @@
+package it.jac.corsojava.distributore;
+
+public class Main1 {
+	
+	public static final String TEXT_GREEN = "\u001B[32m";
+	public static final String TEXT_BLUE = "\u001B[34m";
+	
+	public static void main(String[] args) {
+		
+		Distributore d1 = new Distributore();
+		d1.setCodice("#00001");
+		
+		
+		int nAcqua = d1.getAcquaNaturale();
+		int nMerendine = d1.getMerendine();
+		int nThe = d1.getThe();
+		
+		System.out.println(TEXT_GREEN + String.format("%20s | %20s | %20s | %20s |", d1.getCodice(), nAcqua, nMerendine, nThe )); 
+		// 20s fa uno spazio di 20 caratteri compresa la variabile(%)
+		
+		//Simulo un prelievo
+		d1.prelevaAcqua();
+		d1.prelevaAcqua();
+		d1.prelevaAcqua();
+		d1.prelevaMerendina();
+		
+		nAcqua = d1.getAcquaNaturale();
+		nMerendine = d1.getMerendine();
+		nThe = d1.getThe();
+		
+		System.out.println(String.format("%20s | %20s | %20s | %20s |", d1.getCodice(), nAcqua, nMerendine, nThe ));
+		
+		Distributore d2 = new Distributore();
+		
+		Distributore d3 = new Distributore();
+	}
+}

@@ -1,0 +1,17 @@
+package it.jac.corsojava.distributore;
+
+public class Main1 {
+	
+	public static void main(String[] args) {
+		Distributore d1 = new Distributore();
+		d1.setCodice("#00001");
+		int nAcqua = d1.getAcquaNaturale();
+		int nMerendine = d1.getThe();
+		int nThe = d1.getThe();
+		
+		
+		Distributore d2 = new Distributore();
+		
+		Distributore d3 = new Distributore();
+	}
+}

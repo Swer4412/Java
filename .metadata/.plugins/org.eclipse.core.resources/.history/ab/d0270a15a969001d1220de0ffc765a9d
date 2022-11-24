@@ -1,0 +1,54 @@
+package it.jac.corsojava;
+
+public class Persona {
+	
+	String nome;
+	String cognome;
+	String nascita;
+	
+	static {
+		System.out.println("Non servo");
+	}
+	
+	
+	String stampa() { //Funzione di Main5data
+		
+		return nome + " " + cognome + " " + nascita;
+	} //stampa riesce a prendere giorno mese e anno perche si trova nello stesso scope di Main5data 
+	
+	
+	public static void main(String[] args) {
+		
+		System.out.println("chiamato il metodo main");
+		
+		Persona p1 = new Persona(); // static viene esguito prima di new
+		//new crea una copia della classe main5data nella ram
+		System.out.println(p1.stampa());
+		
+		p1.nome = "Andrea";
+		p1.cognome = "Magri";
+		p1.nascita = "02/04/2003";
+		
+		System.out.println(p1.stampa());
+
+		Persona p2 = new Persona();
+		System.out.println(p2.stampa()); //Stama ancora 1/1/2021 perche il costruttore da questi valori
+		
+		p2.nome = "Paolo";
+		p2.cognome = "Belgio";
+		p2.nascita = "02/02/1998";
+		
+		System.out.println(p2.stampa());
+
+		Persona p3 = new Persona();
+		System.out.println(p3.stampa());
+		
+		p3.nome = "Carlo";
+		p3.cognome = "Zambonin";
+		p3.nascita = "11/21/2001";
+		
+		System.out.println(p3.stampa());
+
+	
+	}
+}
