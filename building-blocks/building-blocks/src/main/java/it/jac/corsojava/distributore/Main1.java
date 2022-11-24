@@ -9,7 +9,7 @@ public class Main1 {
 	
 	public static void main(String[] args) {
 		
-		//Inizio interfaccia della console
+		//Inizio interfaccia della consolee
 		System.out.println("DISTRIBUTORE");
 		System.out.println(String.format("%20s | %20s | %20s | %20s |", "Codice Distributore", "Acqua Naturale", "Merendine", "The"));
 		
