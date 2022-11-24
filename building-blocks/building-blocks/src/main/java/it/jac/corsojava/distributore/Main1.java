@@ -2,6 +2,7 @@ package it.jac.corsojava.distributore;
 
 public class Main1 {
 	
+	//Ciao vediamo se ha funzionato la sincronizzazione
 	// Dichiaro i colori da usare nella console
 	public static final String VERDE = "\u001B[32m";
 	public static final String BLU = "\u001B[34m";
