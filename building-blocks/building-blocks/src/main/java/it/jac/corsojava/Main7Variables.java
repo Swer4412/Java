@@ -8,12 +8,13 @@ import java.io.File;
 public class Main7Variables {
 	
 //	variabile statica associata alla dichiarazione di classe
-	static int z;
+	static int z;// rimane in un parte fissa di memoria, assume un solo valore, senza guardare il numero di istanza
 	
 //	variabile di istanza associata all'oggetto creato con l'operatore "new"
-	int w;
+	int w; // assume un valore specifico per ogni istanza
 
 //	variabili statiche...controlliamo i valori di default
+	//Le variabili globali devono essere dichiarate statiche mentre quelle locali no
 	static boolean fl1;
 	static byte b1;
 	static short sh1;
@@ -34,7 +35,7 @@ public class Main7Variables {
 		
 	}
 
-	private static void localVariables() {
+	private static void localVariables() { //Le variabili locali devono essere inizializzate, quelle globali no
 		
 		System.out.println("il valore di z e': " + z);
 		
@@ -42,7 +43,7 @@ public class Main7Variables {
 		
 //		variabile locale 
 //		il suo valore di default non esiste, deve essere inizializzata prima di usarla all'interno di un'espressione
-		int x;
+		int x; //In java non viene dato il valore undefined
 //		System.out.println("il valore di x e': " + x); // x deve essere inizializzato!
 		
 		String s;

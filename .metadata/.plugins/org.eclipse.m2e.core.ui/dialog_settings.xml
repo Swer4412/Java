@@ -2,6 +2,10 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\Swer4\eclipse-workspace\template-conto-corrente"/>
+			<item value="C:\Users\Swer4\eclipse-workspace\core-api"/>
+			<item value="C:\Users\Swer4\eclipse-workspace\core-api\core-api"/>
+			<item value="C:\Users\Swer4\eclipse-workspace\operators-statements"/>
 			<item value="C:\Users\Swer4\eclipse-workspace\building-blocks\building-blocks"/>
 		</list>
 		<list key="projectNameTemplate">
@@ -12,5 +16,9 @@
 			<item value="[groupId].[artifactId]-[version]"/>
 			<item value="[name]"/>
 		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
 	</section>
 </section>

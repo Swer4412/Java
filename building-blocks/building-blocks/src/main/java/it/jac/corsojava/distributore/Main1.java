@@ -15,7 +15,8 @@ public class Main1 {
 		System.out.println(String.format("%20s | %20s | %20s | %20s |", "Codice Distributore", "Acqua Naturale", "Merendine", "The"));
 		
 		//Creo un nuovo distributore
-		Distributore d1 = new Distributore();
+		Distributore d1; //Fa una copia della classe nella variabile d1
+		d1 = new Distributore(); //Popola la ram con ciò che c'è nel costruttore
 		d1.setCodice("#00001"); //Creare setcodice è solo una formalità infatti si può usare tranquillamente: String dd = d1.codice;
 		int nAcqua = d1.getAcquaNaturale();
 		int nMerendine = d1.getMerendine();

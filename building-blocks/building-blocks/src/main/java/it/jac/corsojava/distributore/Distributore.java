@@ -2,7 +2,7 @@ package it.jac.corsojava.distributore;
 
 public class Distributore {
 	
-	private String codice;
+	private String codice; //Dichiarate private perche sono di uso di questa classe
 	private int acquaNaturale = 10;
 	private int merendine = 10;
 	private int the = 10;
