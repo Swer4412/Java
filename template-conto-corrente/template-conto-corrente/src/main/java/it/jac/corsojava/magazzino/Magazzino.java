@@ -7,7 +7,7 @@ public class Magazzino {
 	ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>();
 	
 	public void aggiungiProdotto(String desc, String prezzo) {
-		double prz = Double.parseDouble(prezzo);
+		double prz = Double.parseDouble(prezzo); //Come Integer.parseInt
 		int codice = nextCodice();
 		this.prodotti.add(new Prodotto(desc, prz, codice));
 	}
