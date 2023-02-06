@@ -2,7 +2,7 @@ package it.jac.corsojava.magazzino;
 
 import java.util.ArrayList;
 
-public class Magazzino {
+public class Magazzino implements MagazzinoInterfaccia {
 	
 	ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>();
 	
@@ -12,19 +12,7 @@ public class Magazzino {
 		this.prodotti.add(new Prodotto(desc, prz, codice));
 	}
 	
-	public int nextCodice() {
-		int codice;
-		
-		try {
-			Prodotto prod = prodotti.get(-1); //La prima volta prodotti di -1 non esiste perchè è vuota
-			codice = prod.getCodice() + 1;
-			return codice;
-		} catch (Exception e) {
-			return 0;
-		}
-	}
-	
-	public String spedisci(String codice) {
+	public String cambiaStato(String codice, String stato) {
 		String msg = "Errore nel codice";
 		int cod;
 		//Guardo se il codice inserito è una stringa altrimenti ritorna problema 
@@ -36,29 +24,7 @@ public class Magazzino {
 		//Guardo quale prodotto ha il codice inserito
 		for (Prodotto prod : prodotti) {
 			if (prod.getCodice()==cod) {
-				prod.setStato("IN SPEDIZIONE");
-				msg = "Prodotto spedito";
-			} else {
-				return msg;
-			}
-		}
-		return msg;
-	
-	}
-	
-	public String consegna(String codice) {
-		String msg = "Errore nel codice";
-		int cod;
-		//Guardo se il codice inserito è una stringa altrimenti ritorna problema 
-		try {
-			cod = Integer.parseInt(codice);
-		} catch (Exception e) {
-			return msg;
-		}
-		//Guardo quale prodotto ha il codice inserito
-		for (Prodotto prod : prodotti) {
-			if (prod.getCodice()==cod) {
-				prod.setStato("CONSEGNATO");
+				prod.setStato(stato);
 				msg = "Prodotto consegnato";
 			} else {
 				return msg;
@@ -67,6 +33,7 @@ public class Magazzino {
 		return msg;
 	
 	}
+	
 	
 	public String visualizzaProdotti() {
 		String stringa = "";
@@ -79,5 +46,17 @@ public class Magazzino {
 					+ "\n------------------\n";
 		}
 		return stringa;
+	}
+	
+	public int nextCodice() {
+		int codice;
+		
+		try {
+			Prodotto prod = prodotti.get(prodotti.size()-1); //La prima volta prodotti di -1 non esiste perchè è vuota
+			codice = prod.getCodice() + 1;
+			return codice;
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 }

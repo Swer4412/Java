@@ -29,12 +29,15 @@ public class Main {
 	
 	private static Logger log = LogManager.getLogger(Main.class);
 	
+	static Scanner sc = new Scanner(System.in);
+	
 	public static void main(String[] args) {
 		log.info("Applicazione avviata"); //Aggiungo i log perchè di sii
+		
 		System.out.println("Magazzino");
-		String codice;
-		Magazzino mgz = new Magazzino();
-		Scanner sc = new Scanner(System.in);
+		
+		MagazzinoInterfaccia mgz = new Magazzino();
+		
 		boolean esc = false;
 		
 		do {
@@ -48,28 +51,16 @@ public class Main {
 			String scelta = sc.nextLine();
 			switch (scelta) {
 			case "1":
-				log.info("Inserimento prodotto");
-				System.out.println("Inserisci descrizione del prodotto: ");
-				String desc = sc.nextLine();
-				System.out.println("Inserisci prezzo del prodotto: ");
-				String prezzo = sc.nextLine();
-				mgz.aggiungiProdotto(desc, prezzo);
+				inserisciProdotto(mgz);
 				break;
 			case "2":
-				log.info("Spedizione prodotto");
-				System.out.println("Inserisci codice prodotto da spedire: ");
-				codice = sc.nextLine();
-				System.out.println(mgz.spedisci(codice));
+				spedisciProdotto(mgz);
 				break;
 			case "3":
-				log.info("Consegna prodotto");
-				System.out.println("Inserisci codice prodotto conseganto: ");
-				codice = sc.nextLine();
-				System.out.println(mgz.consegna(codice));
+				consegnaProdotto(mgz);
 				break;
 			case "4":
-				log.info("Visualizzazione prodotti");
-				System.out.println(mgz.visualizzaProdotti());
+				visualizzaProdotti(mgz);
 				break;
 			case "5":
 				log.info("Uscita dal programma");
@@ -79,6 +70,36 @@ public class Main {
 			
 		} while (!esc);
 		log.info("Applicazione terminata");
+	}
+	
+	public static void inserisciProdotto(MagazzinoInterfaccia mag) {
+		log.info("Inserimento prodotto");
+		System.out.println("Inserisci descrizione del prodotto: ");
+		String desc = sc.nextLine();
+		System.out.println("Inserisci prezzo del prodotto: ");
+		String prezzo = sc.nextLine();
+		mag.aggiungiProdotto(desc, prezzo);
+	}
+	
+	public static void spedisciProdotto(MagazzinoInterfaccia mag) {
+		String codice;
+		log.info("Spedizione prodotto");
+		System.out.println("Inserisci codice prodotto da spedire: ");
+		codice = sc.nextLine();
+		System.out.println(mag.cambiaStato(codice, "IN SPEDIZIONE"));
+	}
+	
+	public static void consegnaProdotto(MagazzinoInterfaccia mag) {
+		String codice;
+		log.info("Consegna prodotto");
+		System.out.println("Inserisci codice prodotto conseganto: ");
+		codice = sc.nextLine();
+		System.out.println(mag.cambiaStato(codice, "CONSEGNATO"));
+	}
+	
+	public static void visualizzaProdotti(MagazzinoInterfaccia mag) {
+		log.info("Visualizzazione prodotti");
+		System.out.println(mag.visualizzaProdotti());
 	}
 }
 
