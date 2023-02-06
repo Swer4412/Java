@@ -51,7 +51,7 @@ public class Main2StaticVsInstance {
 		
 		List<Integer> list1 = Arrays.asList(1,2,3,4,5);
 		
-//		� possibile scrivere anche solo asList(1,2,3,4,5) se si esegue un import static del metodo
+//		è possibile scrivere anche solo asList(1,2,3,4,5) se si esegue un import static del metodo
 //		scrittura poco usata
 		asList(1,2,3,4,5);
 	}

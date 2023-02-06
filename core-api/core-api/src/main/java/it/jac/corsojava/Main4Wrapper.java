@@ -6,7 +6,7 @@ import java.util.List;
 public class Main4Wrapper {
 
 	public static void main(String[] args) {
-		
+//		primitiva   Oggetto
 //   	boolean		Boolean 	new Boolean(true)
 //		byte 		Byte 		new Byte((byte) 1)
 //		short 		Short 		new Short((short) 1)
@@ -15,17 +15,18 @@ public class Main4Wrapper {
 //		float 		Float 		new Float(1.0)
 //		double 		Double 		new Double(1.0)
 //		char 		Character 	new Character('c')
+//Ci si converte il tipo primitivo(primitiva) in oggetto tramite il wrapper(Oggetto)
 		
-		List list = new ArrayList();
+		List list = new ArrayList(); //List è la parte più esterna di arraylist, array, arrays...
 		list.add(100); // in automatico viene costruita la classe Interger contenente il valore 100
 		
-		Integer i = 10; // � come scrivere Integer i = new Integer(10);
+		Integer i = 10; // è come scrivere Integer i = new Integer(10);
 		System.out.println("i = " + i);
 		
 		int n2 = i.intValue();
 		System.out.println("n2 = " + n2);
 		
-//		i = null;
+//		i = null; 
 		int j = i; // in automatico viene estratto il valore dalla classe
 		System.out.println("j = " + j);
 		

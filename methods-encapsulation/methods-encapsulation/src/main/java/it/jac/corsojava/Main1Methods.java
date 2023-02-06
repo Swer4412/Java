@@ -1,6 +1,6 @@
 package it.jac.corsojava;
 
-import java.io.IOException;
+import java.io.IOException; 
 
 import it.jac.corsojava.bean.Persona;
 
@@ -25,22 +25,22 @@ public class Main1Methods {
 	private static void accessModifiers() {
 		
 //		esistono 4 tipologie di modificatori
-//		private
-//		protected
-//		public
-//		default
+//		private   visibilitÃ : classe
+//		protected visibilitÃ : classe + pakage + gerarchia
+//		public	  visibilitÃ : tutti
+//		default   visibilitÃ : classe + pakage
 		
 		Persona p = new Persona();
-//		il metodo pubblico è visibile da tutte le altre classi
+//		il metodo pubblico Ã¨ visibile da tutte le altre classi
 		p.setNome("Marco");
 		
-//		non è visibile perchè non è nello stesso package
+//		non Ã¨ visibile perchÃ¨ non Ã¨ nello stesso package
 //		p.stampaNomeUppercase();
 		
-//		non è visibile perchè non è nello stesso package
+//		non Ã¨ visibile perchÃ¨ non Ã¨ nello stesso package
 //		p.stampaNomeLowercase();
 
-//		non è visibile da nessuno perchè è privato
+//		non Ã¨ visibile da nessuno perchÃ¨ Ã¨ privato
 //		p.stampaNome();
 
 	}
@@ -68,7 +68,7 @@ public class Main1Methods {
 //		i nomi dei metodi seguono le stesse regole dei nomi delle variabili
 //		sono consentite quindi le lettere, i caratteri _ e $
 		
-//		è buona norma usare la prima lettera del nome del metodo in minuscono
+//		ï¿½ buona norma usare la prima lettera del nome del metodo in minuscono
 	}
 
 	private static void parameterList() {
@@ -97,7 +97,7 @@ public class Main1Methods {
 
 	private static void optionalExceptionList() {
 		
-//		richiamo un metodo che può generare un'eccezione
+//		richiamo un metodo che puÃ² generare un'eccezione
 		try {
 			
 			System.out.println("A");
@@ -110,7 +110,7 @@ public class Main1Methods {
 			System.out.println("C");
 		}
 	}
-	
+	// throws lancia delle classi che sono eccezioni, a volte si implementano apposta per forzare try e catch
 	private static void methodException1() throws IOException, IllegalArgumentException {
 		
 	}
@@ -118,20 +118,20 @@ public class Main1Methods {
 	private static void varArgs() {
 		
 //		richiamo corretto
-		methodVargs("", 10,20,55);
+		methodVargs("", 10,20,55); //Passo 3 numeri e arriva nel metodo in 
 		
 //		richiamo corretto
 		methodVargs("", 10);
 
 //		richiamo corretto
-		int[] numeri = new int[3];
+		int[] numeri = new int[3]; //Chiaramente posso passare gia un array di dimensione non specificata
 		methodVargs("", numeri);
 
 	}
 	
-	private static void methodVargs(String s, int...numeri) {
-		
-//		ricordarsi che il parametro "vargs" può essere inserito solo come ultimo elemento
+	private static void methodVargs(String s, int...numeri) { // int...numeri = *args in python
+		//int...numeri Ã¨ un array, anche se ha 1 numero
+//		ricordarsi che il parametro "vargs" puï¿½ essere inserito solo come ultimo elemento
 		
 		System.out.println(s);
 		
