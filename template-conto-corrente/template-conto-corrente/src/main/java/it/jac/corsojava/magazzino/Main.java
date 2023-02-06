@@ -30,7 +30,7 @@ public class Main {
 	private static Logger log = LogManager.getLogger(Main.class);
 	
 	public static void main(String[] args) {
-		log.info("Applicazione avviata"); //Aggiungo i log perchè di si
+		log.info("Applicazione avviata"); //Aggiungo i log perchè di no
 		System.out.println("Magazzino");
 		String codice;
 		Magazzino mgz = new Magazzino();
