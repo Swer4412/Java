@@ -1,6 +1,10 @@
 package it.jac.corsojava.magazzino;
 
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import it.jac.corsojava.MainContoCorrente;
 
 /*
 Definire le classi necessarie a scrivere un programma in grado di simulare una gestione semplificata 
@@ -23,7 +27,10 @@ viene solo modificato lo stato
 */
 public class Main {
 	
+	private static Logger log = LogManager.getLogger(Main.class);
+	
 	public static void main(String[] args) {
+		log.info("Applicazione avviata");
 		System.out.println("Magazzino");
 		String codice;
 		Magazzino mgz = new Magazzino();
@@ -41,6 +48,7 @@ public class Main {
 			String scelta = sc.nextLine();
 			switch (scelta) {
 			case "1":
+				log.info("Inserimento prodotto");
 				System.out.println("Inserisci descrizione del prodotto: ");
 				String desc = sc.nextLine();
 				System.out.println("Inserisci prezzo del prodotto: ");
@@ -48,25 +56,29 @@ public class Main {
 				mgz.aggiungiProdotto(desc, prezzo);
 				break;
 			case "2":
+				log.info("Spedizione prodotto");
 				System.out.println("Inserisci codice prodotto da spedire: ");
 				codice = sc.nextLine();
 				System.out.println(mgz.spedisci(codice));
 				break;
 			case "3":
+				log.info("Consegna prodotto");
 				System.out.println("Inserisci codice prodotto conseganto: ");
 				codice = sc.nextLine();
 				System.out.println(mgz.consegna(codice));
 				break;
 			case "4":
+				log.info("Visualizzazione prodotti");
 				System.out.println(mgz.visualizzaProdotti());
 				break;
 			case "5":
+				log.info("Uscita dal programma");
 				esc = true;
 			}
 			
 			
 		} while (!esc);
-		
+		log.info("Applicazione terminata");
 	}
 }
 

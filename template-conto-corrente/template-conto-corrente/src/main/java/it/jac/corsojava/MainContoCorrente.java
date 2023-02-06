@@ -18,7 +18,7 @@ public class MainContoCorrente {
 		log.info("Applicazione avviata"); //Tracciamento che l'applicazione si è avviata
 //		log.info() è istruito (in log4j2.xml) a scrivere:
 //		14:40:27.571 [main] INFO  it.jac.corsojava.MainContoCorrente - Applicazione avviata
-//		Invece di System.out.println() da ora utilizza i log dato che con loro puoi facilmente scrivere i log su un file
+//		Invece di System.out.println() da ora utilizza anche i log dato che con loro puoi facilmente scrivere i log anche su un file
 		
 		Scanner scanner = new Scanner(System.in);
 		
