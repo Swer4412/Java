@@ -9,6 +9,13 @@ public class Persona {
 		this.nome = nome;
 	}
 	
+	
+	public String getNome() {
+		return this.nome;
+	}
+
+
+
 	void stampaNomeUppercase() {
 		
 		System.out.println(nome.toUpperCase());

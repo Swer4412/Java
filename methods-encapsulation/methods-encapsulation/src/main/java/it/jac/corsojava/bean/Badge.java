@@ -7,8 +7,8 @@ public class Badge {
 	private String cognome;
 	
 	private long createdAt;
-	
-	public Badge() {
+	//Il costruttore ha lo stesso nome della classe
+	public Badge() { //Si possono creare più costruttori, in base a quanti parametri vengono passati
 		
 		System.out.println("costruttore di default");
 		this.createdAt = System.currentTimeMillis();
@@ -17,7 +17,7 @@ public class Badge {
 	public Badge(String codice) {
 		
 //		deve essere la prima riga utile
-		this();
+		this(); //Esegue il costruttore Badge() riga 11
 		this.codice = codice;
 
 		System.out.println("costruttore [codice]");
@@ -26,7 +26,7 @@ public class Badge {
 	public Badge(String codice, String nome, String cognome) {
 
 //		deve essere la prima riga utile
-		this(codice);
+		this(codice); //Esegue il costruttore Badge(String codice) riga 17, quel codice dentro la parentesi è un parametro passato al costruttore
 		this.nome = nome;
 		this.cognome = cognome;
 	}

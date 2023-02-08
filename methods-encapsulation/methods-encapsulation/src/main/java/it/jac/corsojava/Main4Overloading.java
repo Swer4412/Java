@@ -1,7 +1,7 @@
 package it.jac.corsojava;
 
 public class Main4Overloading {
-
+	//Overloading vuol dire chiamare molte funzioni con lo stesso nome (con parametri diversi perÃ²)
 	public static void main(String[] args) {
 		
 		int n1 = 10;
@@ -13,9 +13,9 @@ public class Main4Overloading {
 		double n5 = 199.99;
 		double n6 = 0.98;
 		
-//		somma((Integer)n1, (Integer)n2);
+//		somma((Integer)n1, (Integer)n2); //Se converti due int in Integer, la funzione usata Ã¨ quella che accetta Integer
 		
-		somma(n1, n2);
+		somma(n1, n2); 
 		
 		somma(n1, n2, n3);
 		
@@ -33,13 +33,13 @@ public class Main4Overloading {
 	}
 
 //	se presente la firma con le variabili di tipo primitivo, questa viene preferita rispetto all'uso del wrapper Integer
-//	perchè fa meno lavoro
-//	private static void somma(int numero1, int numero2) {
+//	perchï¿½ fa meno lavoro
+//	private static void somma(int numero1, int numero2) { //Java preferisce utilizzare i tipi primitivi
 //		
 //		System.out.println("int " + (numero1 + numero2));
 //	}
 
-//	NON COMPILA perchè il nome e i parametri sono gli stessi presenti in un altro metodo
+//	NON COMPILA perchï¿½ il nome e i parametri sono gli stessi presenti in un altro metodo
 //	il tipo di ritorno non viene preso in considerazione
 //	private static int somma(int numero1, int numero2) {
 //		

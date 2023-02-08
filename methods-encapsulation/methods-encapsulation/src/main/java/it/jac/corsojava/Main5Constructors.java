@@ -6,7 +6,7 @@ public class Main5Constructors {
 
 	public static void main(String[] args) {
 		
-		Badge badge1 = new Badge();
+		Badge badge1 = new Badge(); //Chiamo il costruttore quello senza parametri
 		badge1.setCodice("jac_ict21_01");
 		badge1.setNome("Armando");
 		badge1.setCognome("Esposito");
