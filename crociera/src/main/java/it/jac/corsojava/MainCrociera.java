@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import it.jac.corsojava.dao.ArchivioCrociera;
 import it.jac.corsojava.entity.Prenotazione;
+import it.jac.corsojava.entity.Persona;
 import it.jac.corsojava.entity.TipoCabina;
 
 // classe che interagisce con l'utente
@@ -21,7 +22,7 @@ public class MainCrociera {
 		
 		log.info("Applicazione avviata");
 		
-		Scanner scanner = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);
 		
 		// creo una nuova istanza dell'archivio
 		ArchivioCrociera archivio = new ArchivioCrociera();
@@ -40,33 +41,33 @@ public class MainCrociera {
 			System.out.println("******");
 			
 			System.out.print("Scegli operazione: ");
-			String scelta = scanner.nextLine();
+			String scelta = sc.nextLine();
 			
 			switch(scelta) {
 			
 				case "1": {
 					
-					nuovaPrenotazione(scanner, archivio);
+					nuovaPrenotazione(sc, archivio);
 					break;
 				}
 				case "2": {
 					
-					calcolaPrenotazione(scanner, archivio);
+					calcolaPrenotazione(sc, archivio);
 					break;
 				}
 				case "3": {
 					
-					elencoPrenotazioni(scanner, archivio);
+					elencoPrenotazioni(sc, archivio);
 					break;
 				}
 				case "4": {
 					
-					elencoPrenotazioniMaggiore(scanner, archivio);
+					elencoPrenotazioniMaggiore(sc, archivio);
 					break;
 				}
 				case "5": {
 					
-					elencoPrenotazioniMaggiore(scanner, archivio);
+					cancellaPrenotazione(sc, archivio);
 					break;
 				}
 				case "99": {
@@ -85,111 +86,65 @@ public class MainCrociera {
 		log.info("Applicazione terminata");
 	}
 
-	private static void nuovaPrenotazione(Scanner scanner, ArchivioCrociera archivio) {
+	private static void nuovaPrenotazione(Scanner sc, ArchivioCrociera archivio) {
 		
-//		log.info("richiesta registrazione nuova entrata merce");
-		
-		// creo una nuova istanza di "Prodotto" per poter impostare al suo interno i dati raccolti dall'utente
+		//Riempio l'oggetto prenotazione
 		Prenotazione prenotazione = new Prenotazione();
 		
-		System.out.print("Inserisci la descrizione: ");
-		prenotazione.nuovaPrenotazione(scanner.nextLine());
-
-		System.out.print("Inserisci il prezzo: ");
-		// leggo da tastiera il prezzo e lo converto in valore double
-		// ATTENZIONE: questa operazione potrebbe generare un errore...ma al momento non sappiamo come gestirla!
-		// inserire quindi un valore corretto
-		prenotazione.setPrezzo(Double.parseDouble(scanner.nextLine()));
+		System.out.print("Inserisci la durata del viaggio: ");
+		prenotazione.setDurataViaggio(Integer.parseInt(sc.nextLine()));
 		
-//		log.debug("cerco di aggiungere il prodotto all'archivio {}", prodotto);
-		// raccolti i dati dall'utente richiamo la funzione di archiviazione
-		int idGenerato = archivio.entrataMerce(prenotazione);
+		System.out.print("Inserisci la tipologia di cabina: ");
+		prenotazione.setCabina(sc.nextLine());
+		
+		System.out.print("Inserisci numero di persone: ");
+		int num = Integer.parseInt(sc.nextLine());
+		ArrayList<Persona> pList = new ArrayList<Persona>();
+		
+		//Riempio l'istanza di persona
+		for (int i = 0; i<num; i++) {
+			System.out.println("Inserisci nome " + i+1 + "° persona: ");
+			String nome = sc.nextLine();
+			System.out.println("Inserisci cognome " + i+1 + "° persona: ");
+			String cognome = sc.nextLine();
+			System.out.println("Inserisci eta " + i+1 + "° persona: ");
+			int eta = Integer.parseInt(sc.nextLine());
+			
+			Persona p = new Persona(nome, cognome, eta);
+			pList.add(p);
+		}
+		//La lista di persone viene passata a prenotazione
+		prenotazione.setPersone(pList);	
+		
+		int idGenerato = archivio.nuovaPrenotazione(prenotazione);
 		
 		System.out.println("Prodotto archiviato con ID [" + idGenerato + "]");
-//		log.info("Prodotto salvato {}", idGenerato);
-	}
-
-	private static void calcolaPrenotazione(Scanner scanner, ArchivioCrociera archivio) {
-		
-//		log.info("richiesta spedizione prodotto");
-		
-		System.out.print("Inserisci ID del prodotto: ");
-		int id = Integer.parseInt(scanner.nextLine());
-		
-//		log.debug("richiamo la funzione dell'archivio con parametro {}", id);
-		boolean spedito = archivio.spedisci(id);
-		if (!spedito) {
-			System.out.println("Non è stato possibile spedire il prodotto");
-//			log.warn("spedizione non possibile per il prodotto con id {}", id);
-		} else {
-			System.out.println("Prodotto spedito");
-//			log.info("prodotto spedito {}", prodotto);
-		}
-		
-	}
-
-	private static void elencoPrenotazioni(Scanner scanner, ArchivioCrociera archivio) {
-		
-//		log.info("richiesta consegna prodotto");
-		
-		System.out.print("Inserisci ID del prodotto: ");
-		int id = Integer.parseInt(scanner.nextLine());
-		
-//		log.debug("richiamo la funzione dell'archivio con parametro {}", id);
-		boolean consegnato = archivio.consegnato(id);
-		if (!consegnato) {
-			System.out.println("Non è stato possibile consegnare il prodotto");
-//			log.warn("consegna non possibile per il prodotto con id {}", id);
-		} else {
-			System.out.println("Prodotto consegnato");
-//			log.info("prodotto consegnato {}", prodotto);
-		}
 
 	}
 
-	private static void elencoPrenotazioniMaggiore(Scanner scanner, ArchivioCrociera archivio) {
+	private static void calcolaPrenotazione(Scanner sc, ArchivioCrociera archivio) {
+		
+		System.out.println("Inserisci id prenotazione da calcolare: ");
+		int id = Integer.parseInt(sc.nextLine());
+		
+		System.out.println(archivio.calcolaPrenotazione(id));
+	}
 
-//		log.info("richiesto elenco prodotti");
+	private static void elencoPrenotazioni(Scanner sc, ArchivioCrociera archivio) {
 		
-		System.out.println("------ELENCO PRODOTTI------");
+		ArrayList<Prenotazione> prenotazioni = archivio.getListPrenotazioni();
 		
-		ArrayList<Prenotazione> list = archivio.getListProdotti();
-//		log.debug("restituiti {} prodotti", list.size());
-		
-		// questa è la forma più semplice di stampa dell'oggetto
-		for (Prenotazione prodotto : list) {
-			
-			System.out.println(prodotto);
+		System.out.println(String.format("%5s|%15s|%20s", "ID", "DURATA VIAGGIO", "CABINA"));
+		for (Prenotazione p : prenotazioni) {
+			System.out.println(String.format("%5i,%5i,%15s", p.getId(), p.getDurataViaggio(), p.getCabina()));
 		}
-		System.out.println("--------------------");
-		
-		// in alternativa è possibile estrarre tutti gli attributi e stamparli uno per uno
-		for (Prenotazione prodotto : list) {
-		
-			System.out.print(prodotto.getId());
-			System.out.print("|");
-			System.out.print(prodotto.getCod());
-			System.out.print("|");
-			System.out.print(prodotto.getDescrizione());
-			System.out.print("|");
-			System.out.println(prodotto.getPrezzo());
-			System.out.print("|");
-			System.out.println(prodotto.getStato());
-		}
-		System.out.println("--------------------");
-		
-		// se curo di più la stampa posso anche formattarla
-		System.out.println(String.format("%6s|%10s|%20s|%10s|%10s", "ID", "COD", "DESCR.", "PREZZO", "STATO"));
-		for (Prenotazione prodotto : list) {
-			
-			System.out.println( //%6d: "%6" = 6 caretteri; "d" = di tipo double
-					String.format("%6d|%10s|%20s|%10.2f|%10s", //10.2f: "%10.2" = 10 caratteri per il numero intero, 2 dopo la virgola; f = float
-							prodotto.getId(), 
-							prodotto.getCod(), 
-							prodotto.getDescrizione(),
-							prodotto.getPrezzo(),
-							prodotto.getStato().toString()));
-		}
+	}
+
+	private static void elencoPrenotazioniMaggiore(Scanner sc, ArchivioCrociera archivio) {
+
+	}
+	
+	private static void cancellaPrenotazione(Scanner sc, ArchivioCrociera archivio) {
 
 	}
 

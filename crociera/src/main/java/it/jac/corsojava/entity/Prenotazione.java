@@ -7,7 +7,7 @@ public class Prenotazione {
 	
 	private int id;
 	private int durataViaggio;
-	private ArrayList<Persona> persone;
+	private ArrayList<Persona> persone; //ArrayList che contiene oggetti di tipo Persona
 	private TipoCabina cabina;
 	
 	public int getId() {
@@ -26,13 +26,26 @@ public class Prenotazione {
 		return this.persone;
 	}
 	public void setPersone(ArrayList<Persona> persone) {
-		
+		this.persone = persone;
 	}
 	public TipoCabina getCabina() {
 		return this.cabina;
 	}
-	public void setCabina(TipoCabina cabina) {
-		this.cabina = cabina;
+	public void setCabina(String cabina) {
+		switch (cabina) {
+		case "interna":
+			this.cabina=TipoCabina.INTERNA;
+			break;
+		case "esterna":
+			this.cabina=TipoCabina.ESTERNA;
+			break;
+		case "balcone":
+			this.cabina=TipoCabina.CON_BALCONE;
+			break;
+		case "suite":
+			this.cabina=TipoCabina.SUITE;
+			break;
+		}
 	}
 }
 
