@@ -99,6 +99,7 @@ public class MainCrociera {
 		
 		System.out.print("Inserisci numero di persone: ");
 		int num = Integer.parseInt(sc.nextLine());
+		//Creo la lista di tipo Persona che conterrà le persone create
 		ArrayList<Persona> pList = new ArrayList<Persona>();
 		
 		//Riempio l'istanza di persona
@@ -111,10 +112,10 @@ public class MainCrociera {
 			int eta = Integer.parseInt(sc.nextLine());
 			
 			Persona p = new Persona(nome, cognome, eta);
-			pList.add(p);
+			pList.add(p); //Aggiungo la persona creata alla lista
 		}
-		//La lista di persone viene passata a prenotazione
-		prenotazione.setPersone(pList);	
+
+		prenotazione.setPersone(pList);	//La lista riempita viene passata ora all oggetto prenotazione
 		
 		int idGenerato = archivio.nuovaPrenotazione(prenotazione);
 		
@@ -134,8 +135,8 @@ public class MainCrociera {
 		
 		ArrayList<Prenotazione> prenotazioni = archivio.getListPrenotazioni();
 		
-		System.out.println(String.format("%5s|%15s|%12s", "ID", "DURATA VIAGGIO", "CABINA"));
 		for (Prenotazione pre : prenotazioni) {
+			System.out.println(String.format("%5s|%15s|%12s", "ID", "DURATA VIAGGIO", "CABINA"));
 			System.out.println(String.format("%5s|%15s|%12s", pre.getId(), pre.getDurataViaggio(), pre.getCabina()));
 			
 			//Creo parte per la visualizzaizone delle persone
@@ -152,11 +153,13 @@ public class MainCrociera {
 		
 		System.out.println("Inserisci durata minima: ");
 		int durata = Integer.parseInt(sc.nextLine());
+		boolean esiste = false;
 		
-		System.out.println(String.format("%5s|%15s|%12s", "ID", "DURATA VIAGGIO", "CABINA"));
 		for (Prenotazione pre : prenotazioni) {
 			//Guardo per ogni prenotazione la durata 
 			if (pre.getDurataViaggio() >= durata) {
+				esiste = true;
+				System.out.println(String.format("%5s|%15s|%12s", "ID", "DURATA VIAGGIO", "CABINA"));
 				System.out.println(String.format("%5s|%15s|%12s", pre.getId(), pre.getDurataViaggio(), pre.getCabina()));
 				
 				//Creo parte per la visualizzaizone delle persone
@@ -165,14 +168,24 @@ public class MainCrociera {
 				for (Persona pers : pre.getPersone()) {
 					System.out.println(String.format("%12s|%12s|%5s", pers.getNome(), pers.getCognome(), pers.getEta()));
 				}
-			} else {
-				System.out.println("Nessuna prenotazione dura più di " + durata + " giorni");
 			}
+		}
+		//Se nessuna iterazione sodisfa l'if sovrastante
+		if (!esiste) {
+			System.out.println("Nessuna prenoteazione durea più di " + durata);
 		}
 	}
 	
 	private static void cancellaPrenotazione(Scanner sc, ArchivioCrociera archivio) {
-
+		
+		System.out.println("Inserisci id prenotazione da cancellare: ");
+		int id = Integer.parseInt(sc.nextLine());
+		
+		if (archivio.cancellaPrenotazione(id)) {
+			System.out.println("Cancellazione effettuata");
+		} else {
+			System.out.println("Problema nella cancellazione");
+		}
 	}
 
 }

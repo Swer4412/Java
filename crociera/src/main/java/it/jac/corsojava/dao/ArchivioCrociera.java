@@ -19,12 +19,16 @@ public class ArchivioCrociera {
 	private ArrayList<Prenotazione> listPrenotazioni = new ArrayList<>(); //Non farlo statico
 	
 	public int nuovaPrenotazione(Prenotazione pren) {
+		
 		//Id generato automaticamente
 		pren.setId(SEQ++);
 		
 		this.listPrenotazioni.add(pren);
 		
+		log.info("Nuova prenotazione {} ", pren.getId());
+		
 		return pren.getId();
+		
 	}
 	
 	public double calcolaPrenotazione(int id) {
@@ -38,6 +42,8 @@ public class ArchivioCrociera {
 						getPrezzo(p.getCabina());
 			}
 		}
+		log.info("Calcolata prenotazione {} {} ", id, tot);
+		
 		return tot;
 	}
 	
@@ -61,6 +67,18 @@ public class ArchivioCrociera {
 	public ArrayList<Prenotazione> getListPrenotazioni() {
 		
 		return this.listPrenotazioni;
+	}
+	
+	public boolean cancellaPrenotazione(int id) {
+		for (Prenotazione p : listPrenotazioni) {
+			if (p.getId()==id) {
+				listPrenotazioni.remove(p);
+				return true;
+			} 
+		}
+		log.info("Cancellata prenotazione {} ", id);
+		
+		return false;
 	}
 	
 	

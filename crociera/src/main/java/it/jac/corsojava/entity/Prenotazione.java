@@ -45,6 +45,8 @@ public class Prenotazione {
 		case "suite":
 			this.cabina=TipoCabina.SUITE;
 			break;
+		default:
+			this.cabina=TipoCabina.INTERNA;
 		}
 	}
 }
