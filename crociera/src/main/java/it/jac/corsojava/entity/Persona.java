@@ -11,5 +11,18 @@ public class Persona {
 		this.cognome = cognome;
 		this.eta = eta;
 	}
+
+	public String getNome() {
+		return this.nome;
+	}
+
+	public String getCognome() {
+		return this.cognome;
+	}
+
+	public int getEta() {
+		return this.eta;
+	}
+	
 	
 }

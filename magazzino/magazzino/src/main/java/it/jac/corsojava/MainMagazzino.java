@@ -1,6 +1,6 @@
 package it.jac.corsojava;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
