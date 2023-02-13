@@ -7,9 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import it.jac.corsojava.dao.ArchivioCrociera;
-import it.jac.corsojava.entity.Prenotazione;
 import it.jac.corsojava.entity.Persona;
-import it.jac.corsojava.entity.TipoCabina;
+import it.jac.corsojava.entity.Prenotazione;
 
 // classe che interagisce con l'utente
 // contiene le funzioni richieste dall'utente
