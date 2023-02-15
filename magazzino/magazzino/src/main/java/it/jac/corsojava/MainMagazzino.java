@@ -1,12 +1,15 @@
 package it.jac.corsojava;
 
-import java.util.ArrayList; 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import it.jac.corsojava.dao.ArchivioMagazzino;
+import it.jac.corsojava.dao.MagazzinoDao;
 import it.jac.corsojava.entity.Prodotto;
 import it.jac.corsojava.entity.StatoProdotto;
 
@@ -31,6 +34,7 @@ public class MainMagazzino {
 		do {
 			
 			System.out.println("***MENU APPLICAZIONE***");
+			System.out.println(" 0) TEST CONNESSIONE");
 			System.out.println(" 1) ENTRATA MERCE");
 			System.out.println(" 2) SPEDIZIONE");
 			System.out.println(" 3) CONSEGNA PRODOTTO");
@@ -42,6 +46,29 @@ public class MainMagazzino {
 			String scelta = scanner.nextLine();
 			
 			switch(scelta) {
+			case "0": {
+				//Questo serve solo per provare se funziona la connessione
+				MagazzinoDao dao = new MagazzinoDao();
+				Connection conn = dao.openConnection();
+				System.out.println(conn);
+				// Uso il try perchè potrebbe esserci qualche problema con il database
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("Non è stato possibile chiudere l'applicazione");
+				}
+				
+				//Qua creo il prodotto e lo passo a dao.create
+				Prodotto newProdotto = new Prodotto();
+				newProdotto.setCod("art55");
+				newProdotto.setDescrizione("Descrizione prodotto art55");
+				newProdotto.setPrezzo(12.49);
+				newProdotto.setStato(StatoProdotto.IN_MAGAZZINO);
+				
+				dao.create(newProdotto);
+				
+				break;
+			}
 			
 			case "1": {
 				
