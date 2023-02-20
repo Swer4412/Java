@@ -2,6 +2,7 @@ package it.jac.corsojava.dao;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,27 +11,21 @@ import it.jac.corsojava.entity.Prodotto;
 import it.jac.corsojava.entity.StatoProdotto;
 
 // rappresenta il gestore del nostro archivio
-public class ArchivioMagazzino {
+public class ServiceMagazzino {
 
-	private static Logger log = LogManager.getLogger(ArchivioMagazzino.class);
+	private static Logger log = LogManager.getLogger(ServiceMagazzino.class);
 
-	// SEQUENZA usata per generare gli ID univoci da assegnare ai prodotti
-	private static int SEQ = 11;
-
-	// archivio dei prodotti in magazzino
-	private ArrayList<Prodotto> listProdotti = new ArrayList<>(); // Non farlo statico
+	private MagazzinoDao dao = new MagazzinoDao();
 
 	public int entrataMerce(Prodotto entity) {
 
-		// assegno all'ID il primo numero di sequenza disponibile
-		entity.setId(SEQ++);
 		// imposto lo stato iniziale del prodotto
 		entity.setStato(StatoProdotto.IN_MAGAZZINO);
 		entity.setDataCreazione(LocalDateTime.now());
 		entity.setUtenteCreazione("java");
-		this.listProdotti.add(entity);
+		dao.create(entity);
 
-		return entity.getId();
+		return dao.findAllProdotti().get(dao.findAllProdotti().size() - 1).getId();
 	}
 
 	public boolean spedisci(int id) {
@@ -38,7 +33,7 @@ public class ArchivioMagazzino {
 		Prodotto prodotto = null;
 
 		// ricerco il prodotto con l'ID indicato
-		for (Prodotto p : this.listProdotti) {
+		for (Prodotto p : this.dao.findAllProdotti()) {
 
 			if (p.getId() == id) {
 
@@ -58,6 +53,8 @@ public class ArchivioMagazzino {
 
 				prodotto.setStato(StatoProdotto.IN_TRANSITO);
 				log.info("Prodotto aggiornato con stato IN_TRANSITO {}", prodotto);
+
+				this.dao.update(prodotto);
 				return true;
 			}
 
@@ -70,6 +67,7 @@ public class ArchivioMagazzino {
 			log.warn("Non e' stato trovato il prodotto con ID {}", id);
 
 		}
+
 		return false;
 	}
 
@@ -78,7 +76,7 @@ public class ArchivioMagazzino {
 		Prodotto prodotto = null;
 
 		// ricerco il prodotto con l'ID indicato
-		for (Prodotto p : this.listProdotti) {
+		for (Prodotto p : this.dao.findAllProdotti()) {
 
 			if (p.getId() == id) {
 
@@ -98,6 +96,8 @@ public class ArchivioMagazzino {
 
 				prodotto.setStato(StatoProdotto.CONSEGNATO);
 				log.info("Prodotto aggiornato con stato CONSEGNATO {}", prodotto);
+
+				this.dao.update(prodotto);
 				return true;
 			}
 
@@ -110,14 +110,15 @@ public class ArchivioMagazzino {
 			log.warn("Non e' stato trovato il prodotto con ID {}", id);
 
 		}
+
 		return false;
 
 	}
 
-	public ArrayList<Prodotto> getListProdotti() {
+	public List<Prodotto> getListProdotti() {
 
 		// restituisco l'elenco di prodotti presenti in archivio
-		return listProdotti;
+		return this.dao.findAllProdotti();
 	}
 
 }

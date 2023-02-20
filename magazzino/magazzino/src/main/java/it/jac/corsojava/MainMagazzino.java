@@ -9,7 +9,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import it.jac.corsojava.dao.ArchivioMagazzino;
+import it.jac.corsojava.dao.ServiceMagazzino;
 import it.jac.corsojava.dao.MagazzinoDao;
 import it.jac.corsojava.entity.Prodotto;
 import it.jac.corsojava.entity.StatoProdotto;
@@ -28,7 +28,7 @@ public class MainMagazzino {
 		Scanner scanner = new Scanner(System.in);
 
 		// creo una nuova istanza dell'archivio
-		ArchivioMagazzino archivio = new ArchivioMagazzino();
+		ServiceMagazzino archivio = new ServiceMagazzino();
 
 		MagazzinoDao dao = new MagazzinoDao();
 
@@ -37,7 +37,7 @@ public class MainMagazzino {
 		do {
 
 			System.out.println("***MENU APPLICAZIONE***");
-			System.out.println(" 0) COMMIT MODIFICHE");
+			System.out.println(" 0) PROVA CONNESSIONE");
 			System.out.println(" 1) ENTRATA MERCE");
 			System.out.println(" 2) SPEDIZIONE");
 			System.out.println(" 3) CONSEGNA PRODOTTO");
@@ -52,15 +52,6 @@ public class MainMagazzino {
 			case "0": {
 
 				Connection conn = dao.openConnection();
-
-				List<Prodotto> list = archivio.getListProdotti();
-				for (Prodotto prod : list) {
-					dao.create(prod);
-				}
-
-				// Una volta che ho caricato le modifiche, devo svuotare la lista per evitare
-				// doppi caricamenti
-				archivio.getListProdotti().clear();
 
 				// Uso il try perchè potrebbe esserci qualche problema con il database
 				try {
@@ -88,14 +79,7 @@ public class MainMagazzino {
 			}
 			case "4": {
 
-				List<Prodotto> list = dao.findAllProdotti();
-
-				// questa è la forma più semplice di stampa dell'oggetto
-				for (Prodotto prodotto : list) {
-
-					System.out.println(prodotto);
-				}
-
+				elencoProdotti(scanner, archivio);
 				break;
 			}
 			case "99": {
@@ -113,7 +97,7 @@ public class MainMagazzino {
 		log.info("Applicazione terminata");
 	}
 
-	private static void entrataMerce(Scanner scanner, ArchivioMagazzino archivio) {
+	private static void entrataMerce(Scanner scanner, ServiceMagazzino archivio) {
 
 		Prodotto prodotto = new Prodotto();
 
@@ -131,7 +115,7 @@ public class MainMagazzino {
 		log.info("Creato prodotto di id: " + id);
 	}
 
-	private static void spedizione(Scanner scanner, ArchivioMagazzino archivio) {
+	private static void spedizione(Scanner scanner, ServiceMagazzino archivio) {
 
 //		log.info("richiesta spedizione prodotto");
 
@@ -150,7 +134,7 @@ public class MainMagazzino {
 
 	}
 
-	private static void consegnaProdotto(Scanner scanner, ArchivioMagazzino archivio) {
+	private static void consegnaProdotto(Scanner scanner, ServiceMagazzino archivio) {
 
 //		log.info("richiesta consegna prodotto");
 
@@ -169,13 +153,13 @@ public class MainMagazzino {
 
 	}
 
-	private static void elencoProdotti(Scanner scanner, ArchivioMagazzino archivio) {
+	private static void elencoProdotti(Scanner scanner, ServiceMagazzino archivio) {
 
 //		log.info("richiesto elenco prodotti");
 
 		System.out.println("------ELENCO PRODOTTI------");
 
-		ArrayList<Prodotto> list = archivio.getListProdotti();
+		List<Prodotto> list = archivio.getListProdotti();
 //		log.debug("restituiti {} prodotti", list.size());
 
 		// questa è la forma più semplice di stampa dell'oggetto

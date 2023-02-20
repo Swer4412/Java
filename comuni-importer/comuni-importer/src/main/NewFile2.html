@@ -1,0 +1,377 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prenotazione risorse</title>
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>	
+<style>
+body {
+	font-size: .875rem;
+}
+
+.feather {
+	width: 16px;
+	height: 16px;
+	vertical-align: text-bottom;
+}
+
+.sidebar {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+	padding: 0;
+	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+	position: sticky;
+	top: 48px;
+	height: calc(100vh - 48px);
+	padding-top: .5rem;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.sidebar   .nav-link {
+	font-weight: 500;
+	color: #333;
+}
+
+.sidebar   .nav-link   .feather {
+	margin-right: 4px;
+	color: #999;
+}
+
+.sidebar   .nav-link.active {
+	color: #007bff;
+}
+
+.sidebar   .nav-link:hover   .feather, .sidebar   .nav-link.active   .feather
+	{
+	color: inherit;
+}
+
+.sidebar-heading {
+	font-size: .75rem;
+	text-transform: uppercase;
+}
+
+.navbar-brand {
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	font-size: 1rem;
+	background-color: rgba(0, 0, 0, .25);
+	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar   .form-control {
+	padding: .75rem 1rem;
+	border-width: 0;
+	border-radius: 0;
+}
+
+.form-control-dark {
+	color: #fff;
+	background-color: rgba(255, 255, 255, .1);
+	border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+	border-color: transparent;
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.border-top {
+	border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+	border-bottom: 1px solid #e5e5e5;
+}
+</style>
+<style>
+.day-container {
+	border: 0.5px solid gray;
+	border-collapse: collapse;
+	padding: 3px;
+	height: 150px;
+	font-size: 12px;
+}
+
+.day-container   span {
+	border-bottom: 1px solid gray;
+}
+
+.day-container-h {
+	border: 0.5px solid gray;
+	padding: 3px;
+}
+
+.prenotazione {
+	background-color: orange;
+	margin-top: 2px;
+	margin-bottom: 3px;
+}
+</style>
+<style>
+select {
+	background-color: yellow;
+}
+</style>
+</head>
+<body>
+	<app-root _nghost-pul-c45="" ng-version="11.0.9">
+	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+		<a href="#" class="navbar-brand col-sm-3 col-md-2 mr-0">App Prenotazione Risorse</a>
+		<ul class="navbar-nav px-3">
+			<li class="nav-item text-nowrap"><a href="#" class="nav-link">Nome Utente Collegato</a></li>
+		</ul>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a href="#" class="nav-link active"><span
+								data-feather="home"></span> Prenotazioni <span class="sr-only">(current)</span></a></li>
+					</ul>
+				</div>
+			</nav>
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+					<h1 class="h2">Prenotazioni</h1>
+				</div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-9">
+							<app-gridcalendar _nghost-pul-c104="">
+							<div class="clearfix" style="padding-bottom: 3px;">
+								<button type="button" class="btn btn-secondary float-left">&lt;
+									Mese</button>
+								<button type="button" class="btn btn-secondary float-right">Mese
+									&gt;</button>
+							</div>
+							<div class="row">
+								<div class="col-sm day-container-h">
+									<span>Lunedì</span>
+								</div>
+								<div class="col-sm day-container-h">
+									<span>Martedi</span>
+								</div>
+								<div class="col-sm day-container-h">
+									<span>Mercoledì</span>
+								</div>
+								<div class="col-sm day-container-h">
+									<span>Giovedì</span>
+								</div>
+								<div class="col-sm day-container-h">
+									<span>Venerdì</span>
+								</div>
+								<div class="col-sm day-container-h">
+									<span>Sabato</span>
+								</div>
+								<div class="col-sm day-container-h">
+									<span>Domenica</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>30/08/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>31/08/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>01/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>02/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>03/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>04/09/21</span>
+								</div>
+								<div class="col-sm day-container"
+									style="cursor: pointer; background-color: lightgreen;">
+									<span>05/09/21</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>06/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>07/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>08/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>09/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>10/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>11/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>12/09/21</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>13/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>14/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>15/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>16/09/21</span>
+									<div class="prenotazione">Risorsa1 - [09:00 - 10:00]</div>
+									<div class="prenotazione">Risorsa3 - [14:15 - 16:15]</div>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>17/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>18/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>19/09/21</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>20/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>21/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>22/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>23/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>24/09/21</span>
+									<div class="prenotazione">Risorsa1 - [09:00 - 10:00]</div>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>25/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>26/09/21</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>27/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>28/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>29/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>30/09/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>01/10/21</span>
+									<div class="prenotazione">Risorsa1 - [09:00 - 10:00]</div>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>02/10/21</span>
+								</div>
+								<div class="col-sm day-container" style="cursor: pointer;">
+									<span>03/10/21</span>
+								</div>
+							</div>
+							<div class="row"></div>
+							</app-gridcalendar>
+						</div>
+						<div class="col-sm-3">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-sm-12">
+										<app-choose-resource>
+										<form novalidate="" class="ng-untouched ng-pristine ng-valid">
+											<div class="form-group">
+												<label for="chooseResource">Risorsa</label><select
+													id="chooseResource" class="form-control"><option
+														value="undefined" disabled="" selected=""
+														ng-reflect-value="undefined">Seleziona risorsa</option>
+													<option value="1" ng-reflect-value="1">Risorsa 1</option>
+													<option value="2" ng-reflect-value="2">Risorsa 2</option>
+													<option value="3" ng-reflect-value="3">Risorsa 3</option>
+													<option value="4" ng-reflect-value="4">Risorsa 4</option>
+													<option value="5" ng-reflect-value="5">Risorsa 5</option></select>
+											</div>
+										</form>
+										</app-choose-resource>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<app-choose-slot _nghost-pul-c106="">
+										<div id="slot-loading" class="spinner-border" role="status" style="display:none">
+											<span class="sr-only">Loading...</span>
+										</div>
+										<div id="slot-content">
+											<div>
+												<span>Slot disponibili</span>&nbsp; 
+												<span style="background-color: yellow;">Risorsa 1</span>&nbsp; 
+												<span style="background-color: lightgreen;">05/09/2021</span>
+											</div>
+											<div>
+												<ul class="list-group">
+													<li class="list-group-item">09:00 - 10:00</li>
+													<li class="list-group-item">10:30 - 11:00</li>
+													<li class="list-group-item">13:00 - 14:30</li>
+													<li class="list-group-item">16:00 - 16:30</li>
+												</ul>
+											</div>
+										</div>
+										</app-choose-slot>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+	<script>
+		$( document ).ready(function() {
+		    $('.day-container').click(function(event) {
+		    	console.log(event);
+		    	$('.day-container').css('background-color', '');
+		    	$(event.target).css("background-color","lightgreen");
+		    	$('#slot-content').hide();
+		    	$('#slot-loading').show();
+		    	setTimeout(function() {
+		    		console.log("richiamo il server per ottenere l'elenco degli slot disponibili");
+		    		$('#slot-loading').hide();
+		    		$('#slot-content').show();
+		    	}, 500);
+		    	
+		    });
+		});
+	</script>
+</body>
+</html>

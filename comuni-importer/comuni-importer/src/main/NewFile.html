@@ -1,0 +1,403 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prenotazione risorse</title>
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+<style>
+body[_ngcontent-pul-c45] {
+	font-size: .875rem;
+}
+
+.feather[_ngcontent-pul-c45] {
+	width: 16px;
+	height: 16px;
+	vertical-align: text-bottom;
+}
+
+.sidebar[_ngcontent-pul-c45] {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+	padding: 0;
+	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky[_ngcontent-pul-c45] {
+	position: sticky;
+	top: 48px;
+	height: calc(100vh - 48px);
+	padding-top: .5rem;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.sidebar[_ngcontent-pul-c45]   .nav-link[_ngcontent-pul-c45] {
+	font-weight: 500;
+	color: #333;
+}
+
+.sidebar[_ngcontent-pul-c45]   .nav-link[_ngcontent-pul-c45]   .feather[_ngcontent-pul-c45]
+	{
+	margin-right: 4px;
+	color: #999;
+}
+
+.sidebar[_ngcontent-pul-c45]   .nav-link.active[_ngcontent-pul-c45] {
+	color: #007bff;
+}
+
+.sidebar[_ngcontent-pul-c45]   .nav-link[_ngcontent-pul-c45]:hover   .feather[_ngcontent-pul-c45],
+	.sidebar[_ngcontent-pul-c45]   .nav-link.active[_ngcontent-pul-c45]   .feather[_ngcontent-pul-c45]
+	{
+	color: inherit;
+}
+
+.sidebar-heading[_ngcontent-pul-c45] {
+	font-size: .75rem;
+	text-transform: uppercase;
+}
+
+.navbar-brand[_ngcontent-pul-c45] {
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	font-size: 1rem;
+	background-color: rgba(0, 0, 0, .25);
+	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar[_ngcontent-pul-c45]   .form-control[_ngcontent-pul-c45] {
+	padding: .75rem 1rem;
+	border-width: 0;
+	border-radius: 0;
+}
+
+.form-control-dark[_ngcontent-pul-c45] {
+	color: #fff;
+	background-color: rgba(255, 255, 255, .1);
+	border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark[_ngcontent-pul-c45]:focus {
+	border-color: transparent;
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.border-top[_ngcontent-pul-c45] {
+	border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom[_ngcontent-pul-c45] {
+	border-bottom: 1px solid #e5e5e5;
+}
+</style>
+<style>
+.day-container[_ngcontent-pul-c104] {
+	border: 0.5px solid gray;
+	border-collapse: collapse;
+	padding: 3px;
+	height: 150px;
+	font-size: 12px;
+}
+
+.day-container[_ngcontent-pul-c104]   span[_ngcontent-pul-c104] {
+	border-bottom: 1px solid gray;
+}
+
+.day-container-h[_ngcontent-pul-c104] {
+	border: 0.5px solid gray;
+	padding: 3px;
+}
+</style>
+<style>
+select[_ngcontent-pul-c105] {
+	background-color: yellow;
+}
+</style>
+</head>
+<body>
+	<app-root _nghost-pul-c45="" ng-version="11.0.9">
+	<nav _ngcontent-pul-c45=""
+		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+		<a _ngcontent-pul-c45="" href="#"
+			class="navbar-brand col-sm-3 col-md-2 mr-0">Company name</a>
+		<ul _ngcontent-pul-c45="" class="navbar-nav px-3">
+			<li _ngcontent-pul-c45="" class="nav-item text-nowrap"><a
+				_ngcontent-pul-c45="" href="#" class="nav-link">Sign out</a></li>
+		</ul>
+	</nav>
+	<div _ngcontent-pul-c45="" class="container-fluid">
+		<div _ngcontent-pul-c45="" class="row">
+			<nav _ngcontent-pul-c45=""
+				class="col-md-2 d-none d-md-block bg-light sidebar">
+				<div _ngcontent-pul-c45="" class="sidebar-sticky">
+					<ul _ngcontent-pul-c45="" class="nav flex-column">
+						<li _ngcontent-pul-c45="" class="nav-item"><a
+							_ngcontent-pul-c45="" href="#" class="nav-link active"><span
+								_ngcontent-pul-c45="" data-feather="home"></span> Prenotazioni <span
+								_ngcontent-pul-c45="" class="sr-only">(current)</span></a></li>
+					</ul>
+				</div>
+			</nav>
+			<main _ngcontent-pul-c45="" role="main"
+				class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<div _ngcontent-pul-c45=""
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+					<h1 _ngcontent-pul-c45="" class="h2">Prenotazioni</h1>
+				</div>
+				<div _ngcontent-pul-c45="" class="container-fluid">
+					<div _ngcontent-pul-c45="" class="row">
+						<div _ngcontent-pul-c45="" class="col-sm-9">
+							<app-gridcalendar _ngcontent-pul-c45="" _nghost-pul-c104="">
+							<div _ngcontent-pul-c104="" class="clearfix"
+								style="padding-bottom: 3px;">
+								<button _ngcontent-pul-c104="" type="button"
+									class="btn btn-secondary float-left">&lt; Mese</button>
+								<button _ngcontent-pul-c104="" type="button"
+									class="btn btn-secondary float-right">Mese &gt;</button>
+							</div>
+							<div _ngcontent-pul-c104="" class="row">
+								<div _ngcontent-pul-c104="" class="col-sm day-container-h">
+									<span _ngcontent-pul-c104="">Lunedì</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container-h">
+									<span _ngcontent-pul-c104="">Martedi</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container-h">
+									<span _ngcontent-pul-c104="">Mercoledì</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container-h">
+									<span _ngcontent-pul-c104="">Giovedì</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container-h">
+									<span _ngcontent-pul-c104="">Venerdì</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container-h">
+									<span _ngcontent-pul-c104="">Sabato</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container-h">
+									<span _ngcontent-pul-c104="">Domenica</span>
+								</div>
+							</div>
+							<div _ngcontent-pul-c104="" class="row">
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">30/08/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">31/08/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">01/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">02/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">03/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">04/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer; background-color: lightgreen;"
+									ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">05/09/21</span>
+								</div>
+							</div>
+							<div _ngcontent-pul-c104="" class="row">
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">06/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">07/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">08/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">09/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">10/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">11/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">12/09/21</span>
+								</div>
+							</div>
+							<div _ngcontent-pul-c104="" class="row">
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">13/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">14/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">15/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">16/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">17/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">18/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">19/09/21</span>
+								</div>
+							</div>
+							<div _ngcontent-pul-c104="" class="row">
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">20/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">21/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">22/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">23/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">24/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">25/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">26/09/21</span>
+								</div>
+							</div>
+							<div _ngcontent-pul-c104="" class="row">
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">27/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">28/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">29/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">30/09/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">01/10/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">02/10/21</span>
+								</div>
+								<div _ngcontent-pul-c104="" class="col-sm day-container"
+									style="cursor: pointer;" ng-reflect-ng-style="[object Object]">
+									<span _ngcontent-pul-c104="">03/10/21</span>
+								</div>
+							</div>
+							<div _ngcontent-pul-c104="" class="row"></div>
+							</app-gridcalendar>
+						</div>
+						<div _ngcontent-pul-c45="" class="col-sm-3">
+							<div _ngcontent-pul-c45="" class="container-fluid">
+								<div _ngcontent-pul-c45="" class="row">
+									<div _ngcontent-pul-c45="" class="col-sm-12">
+										<app-choose-resource _ngcontent-pul-c45="" _nghost-pul-c105="">
+										<form _ngcontent-pul-c105="" novalidate=""
+											class="ng-untouched ng-pristine ng-valid">
+											<div _ngcontent-pul-c105="" class="form-group">
+												<label _ngcontent-pul-c105="" for="chooseResource">Risorsa</label><select
+													_ngcontent-pul-c105="" id="chooseResource"
+													class="form-control"><option
+														_ngcontent-pul-c105="" value="undefined" disabled=""
+														selected="" ng-reflect-value="undefined">Seleziona
+														risorsa</option>
+													<option _ngcontent-pul-c105="" value="1"
+														ng-reflect-value="1">Risorsa 1</option>
+													<option _ngcontent-pul-c105="" value="2"
+														ng-reflect-value="2">Risorsa 2</option>
+													<option _ngcontent-pul-c105="" value="3"
+														ng-reflect-value="3">Risorsa 3</option>
+													<option _ngcontent-pul-c105="" value="4"
+														ng-reflect-value="4">Risorsa 4</option>
+													<option _ngcontent-pul-c105="" value="5"
+														ng-reflect-value="5">Risorsa 5</option></select>
+											</div>
+										</form>
+										</app-choose-resource>
+									</div>
+								</div>
+								<div _ngcontent-pul-c45="" class="row">
+									<div _ngcontent-pul-c45="" class="col-sm-12">
+										<app-choose-slot _ngcontent-pul-c45="" _nghost-pul-c106="">
+										<div _ngcontent-pul-c106="">
+											<div _ngcontent-pul-c106="">
+												<span _ngcontent-pul-c106="">Slot disponibili</span>&nbsp; <span
+													_ngcontent-pul-c106="" style="background-color: yellow;">Risorsa
+													1</span>&nbsp; <span _ngcontent-pul-c106=""
+													style="background-color: lightgreen;">05/09/2021</span>
+											</div>
+											<div _ngcontent-pul-c106="">
+												<ul _ngcontent-pul-c106="" class="list-group">
+													<li _ngcontent-pul-c106="" class="list-group-item">09:00
+														- 10:00</li>
+													<li _ngcontent-pul-c106="" class="list-group-item">10:30
+														- 11:00</li>
+													<li _ngcontent-pul-c106="" class="list-group-item">13:00
+														- 14:30</li>
+													<li _ngcontent-pul-c106="" class="list-group-item">16:00
+														- 16:30</li>
+												</ul>
+											</div>
+										</div>
+										</app-choose-slot>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+</body>
+</html>

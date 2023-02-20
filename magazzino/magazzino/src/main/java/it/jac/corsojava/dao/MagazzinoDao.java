@@ -158,4 +158,40 @@ public class MagazzinoDao {
 
 		return result;
 	}
+
+	public void update(Prodotto prod) {
+
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("UPDATE prodotto");
+		sb.append(" SET stato=?");
+		sb.append(" WHERE id=?");
+
+		try {
+
+			conn = openConnection();
+			pstm = conn.prepareStatement(sb.toString());
+
+			pstm.setString(1, prod.getStato().toString());
+			pstm.setInt(2, prod.getId());
+
+			int rowsUpdated = pstm.executeUpdate(); // Una volta eseguito l'update ritorna quante righe sono state
+			// modificate
+
+			log.debug("Aggiornate {} righe ", rowsUpdated);
+
+		} catch (SQLException e) {
+			log.error("Errore nella interrogazione del database ", e);
+		} finally {
+
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// Non faccio nulla
+			}
+
+		}
+	}
 }
