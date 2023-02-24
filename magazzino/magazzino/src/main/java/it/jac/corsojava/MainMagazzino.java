@@ -28,11 +28,10 @@ public class MainMagazzino {
 		Scanner scanner = new Scanner(System.in);
 
 		// creo una nuova istanza dell'archivio
-		ServiceMagazzino archivio = new ServiceMagazzino();
+		ServiceMagazzino service = new ServiceMagazzino();
 
 		MagazzinoDao dao = new MagazzinoDao();
 
-		// dichiaro una variabile di tipo boolean
 		boolean esc = false;
 		do {
 
@@ -64,22 +63,22 @@ public class MainMagazzino {
 				break;
 			case "1": {
 
-				entrataMerce(scanner, archivio);
+				entrataMerce(scanner, service);
 				break;
 			}
 			case "2": {
 
-				spedizione(scanner, archivio);
+				spedizione(scanner, service);
 				break;
 			}
 			case "3": {
 
-				consegnaProdotto(scanner, archivio);
+				consegnaProdotto(scanner, service);
 				break;
 			}
 			case "4": {
 
-				elencoProdotti(scanner, archivio);
+				elencoProdotti(scanner, service);
 				break;
 			}
 			case "99": {
@@ -97,7 +96,7 @@ public class MainMagazzino {
 		log.info("Applicazione terminata");
 	}
 
-	private static void entrataMerce(Scanner scanner, ServiceMagazzino archivio) {
+	private static void entrataMerce(Scanner scanner, ServiceMagazzino service) {
 
 		Prodotto prodotto = new Prodotto();
 
@@ -110,12 +109,12 @@ public class MainMagazzino {
 		System.out.print("Inserisci il prezzo: ");
 		prodotto.setPrezzo(Double.parseDouble(scanner.nextLine()));
 
-		int id = archivio.entrataMerce(prodotto);
+		int id = service.entrataMerce(prodotto);
 
 		log.info("Creato prodotto di id: " + id);
 	}
 
-	private static void spedizione(Scanner scanner, ServiceMagazzino archivio) {
+	private static void spedizione(Scanner scanner, ServiceMagazzino service) {
 
 //		log.info("richiesta spedizione prodotto");
 
@@ -123,7 +122,7 @@ public class MainMagazzino {
 		int id = Integer.parseInt(scanner.nextLine());
 
 //		log.debug("richiamo la funzione dell'archivio con parametro {}", id);
-		boolean spedito = archivio.spedisci(id);
+		boolean spedito = service.spedisci(id);
 		if (!spedito) {
 			System.out.println("Non è stato possibile spedire il prodotto");
 //			log.warn("spedizione non possibile per il prodotto con id {}", id);
@@ -134,7 +133,7 @@ public class MainMagazzino {
 
 	}
 
-	private static void consegnaProdotto(Scanner scanner, ServiceMagazzino archivio) {
+	private static void consegnaProdotto(Scanner scanner, ServiceMagazzino service) {
 
 //		log.info("richiesta consegna prodotto");
 
@@ -142,7 +141,7 @@ public class MainMagazzino {
 		int id = Integer.parseInt(scanner.nextLine());
 
 //		log.debug("richiamo la funzione dell'archivio con parametro {}", id);
-		boolean consegnato = archivio.consegnato(id);
+		boolean consegnato = service.consegnato(id);
 		if (!consegnato) {
 			System.out.println("Non è stato possibile consegnare il prodotto");
 //			log.warn("consegna non possibile per il prodotto con id {}", id);
@@ -153,13 +152,13 @@ public class MainMagazzino {
 
 	}
 
-	private static void elencoProdotti(Scanner scanner, ServiceMagazzino archivio) {
+	private static void elencoProdotti(Scanner scanner, ServiceMagazzino service) {
 
 //		log.info("richiesto elenco prodotti");
 
 		System.out.println("------ELENCO PRODOTTI------");
 
-		List<Prodotto> list = archivio.getListProdotti();
+		List<Prodotto> list = service.getListProdotti();
 //		log.debug("restituiti {} prodotti", list.size());
 
 		// questa è la forma più semplice di stampa dell'oggetto
