@@ -50,7 +50,7 @@ public class ArchivioFotografie {
 	
 	public boolean cancellaFotografia(int id) {
 		for (Fotografia f : this.listFotografie) {
-			if (f.getId()==id) {
+			if (f.getId()==id) { //Guarda equals e hascode
 				this.listFotografie.remove(f);
 				log.info("Cancellata fotografia di id: {} ", id);
 				return true;
