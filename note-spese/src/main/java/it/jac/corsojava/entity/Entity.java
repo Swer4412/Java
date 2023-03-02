@@ -15,6 +15,7 @@ public class Entity {
 	
 	private CategoriaSpesa categoria_spesa;
 
+	
 	public Societa getSocieta() {
 		return societa;
 	}

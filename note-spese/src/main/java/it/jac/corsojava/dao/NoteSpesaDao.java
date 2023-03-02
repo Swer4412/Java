@@ -5,16 +5,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import it.jac.corsojava.entity.Entity;
+import it.jac.corsojava.entity.NotaSpesa;
 import it.jac.corsojava.entity.StatoSpesa;
+import it.jac.corsojava.entity.VoceSpesa;
 
 public class NoteSpesaDao {
 
@@ -48,12 +48,18 @@ public class NoteSpesaDao {
 		
 		Connection conn = null;
 		PreparedStatement pstm = null;
-
+		
+		//Estraggo gli oggetti che mi servono da entity
+		NotaSpesa ns = entity.getNota_spesa();
+		ArrayList<VoceSpesa> voci = entity.getVoci_spesa();
+		
+		//INSERIMENTO
+		//Inserisco la nota spesa
 		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT INTO magazzino.prodotto");
-		sb.append("(cod, descrizione, prezzo, stato, data_creazione, utente_creazione)");
+		sb.append("INSERT INTO note_spese.nota_spesa");
+		sb.append("(cod, mese_rif, importo_totale, stato, id_dipendente, utente_creazione, data_creazione)");
 		sb.append("VALUES");
-		sb.append(" (?, ?, ?, ?, ?, ?)");
+		sb.append(" (?, ?, ?, ?, ?, ?, ?)");
 
 		try {
 
@@ -61,7 +67,13 @@ public class NoteSpesaDao {
 
 			pstm = conn.prepareStatement(sb.toString());
 
-			pstm.setString(1, entity.get());
+			pstm.setString(1, ns.getCodice());
+			pstm.setString(1, ns.getMese_rif());
+			pstm.setDouble(1, ns.getImporto_totale());
+			pstm.setString(1, ns.getStato().toString());
+			pstm.setInt(1, ns.getId_dipendente());
+			pstm.setString(1, ns.getUtente_creazione());
+			pstm.setTimestamp(1, java.sql.Timestamp.valueOf(ns.getData_creazione()));
 
 			int rowsUpdated = pstm.executeUpdate();
 
