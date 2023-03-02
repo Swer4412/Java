@@ -132,7 +132,8 @@ public class MainNoteSpesa {
 	}
 
 	private static void validaNota(Scanner sc, ServiceNoteSpesa service) {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
@@ -140,12 +141,64 @@ public class MainNoteSpesa {
 		
 		System.out.println("Inserisci lo stato che vuoi visualizzare: ");
 		String stato = sc.nextLine();
-		//Traduci la stringa in StatoSpesa
+		
+		//Converto la stringa in StatoSpesa
+		StatoSpesa statoSpesa = stringToEnum(stato);
 		
 		for (Entity entity : service.visualizza()) {
-			if (entity.getNota_spesa().getStato().equals()); 
+			
+			System.out.println("_______________________________________________");
+			
+			if (entity.getNota_spesa().getStato().equals(statoSpesa));
+			
+			NotaSpesa ns = entity.getNota_spesa(); 
+			//Intestazione 
+			System.out.println(String.format(
+					"%5s|%29s|%6s|%7.2f|%15s|%5s|",
+					"ID", "CODICE", "MESE", "IMPORTO", "STATO", "ID DIPENDENTE"
+					));
+			
+			System.out.println(String.format(
+					"%5s|%29s|%6s|%7.2f|%15s|%5s|",
+					ns.getId(), ns.getCodice(), ns.getMese_rif(),
+					ns.getImporto_totale(), ns.getStato(), ns.getId_dipendente()
+					));
+			
+			for (VoceSpesa vs : entity.getVoci_spesa()) {
+				
+				System.out.println("_______________________________________________");
+				
+				System.out.println(String.format(
+						"%5s|%30s|%7.2f|%5S|%5s",
+						"ID", "COMMENTO", "IMPORTO", "ID NOTA SPESA", "ID CATEGORIA"
+						));
+				
+				System.out.println(String.format(
+						"%5s|%30s|%7.2f|%5S|%5s",
+						vs.getId(), vs.getCommento(), vs.getImporto(), vs.getId_nota_spesa(), vs.getId_categoria()
+						));
+			}
+			
 		}
 		
+	}
+	
+	public static StatoSpesa stringToEnum(String str) {
+		
+		StatoSpesa stato = null;
+		
+		switch (str) {
+		case "registrata":
+			stato = StatoSpesa.REGISTRATA;
+		case "in validazione":
+			stato = StatoSpesa.REGISTRATA;
+		case "validata":
+			stato = StatoSpesa.REGISTRATA;
+		case "rifiutata":
+			stato = StatoSpesa.REGISTRATA;
+		}
+		
+		return stato;
 	}
 
 }
