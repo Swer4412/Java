@@ -2,19 +2,19 @@ package it.jac.corsojava.entity;
 
 import java.time.LocalDateTime;
 
-public class Dipendente {
+public class NotaSpesa {
 	
 	private int id;
 	
-	private String matricola;
+	private String codice;
 	
-	private String nome;
+	private String mese_rif;
 	
-	private String cognome;
+	private double importo_totale;
 	
-	private int id_societa;
+	private StatoSpesa stato;
 	
-	private LocalDateTime data_nascita;
+	private int id_dipendente;
 	
 	private String utente_creazione;
 	
@@ -24,7 +24,6 @@ public class Dipendente {
 	
 	private LocalDateTime data_modifica;
 
-	
 	public int getId() {
 		return id;
 	}
@@ -33,44 +32,44 @@ public class Dipendente {
 		this.id = id;
 	}
 
-	public String getMatricola() {
-		return matricola;
+	public String getCodice() {
+		return codice;
 	}
 
-	public void setMatricola(String matricola) {
-		this.matricola = matricola;
+	public void setCodice(String codice) {
+		this.codice = codice;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getMese_rif() {
+		return mese_rif;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setMese_rif(String mese_rif) {
+		this.mese_rif = mese_rif;
 	}
 
-	public String getCognome() {
-		return cognome;
+	public double getImporto_totale() {
+		return importo_totale;
 	}
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
+	public void setImporto_totale(double importo_totale) {
+		this.importo_totale = importo_totale;
 	}
 
-	public int getId_societa() {
-		return id_societa;
+	public StatoSpesa getStato() {
+		return stato;
 	}
 
-	public void setId_societa(int id_societa) {
-		this.id_societa = id_societa;
+	public void setStato(StatoSpesa stato) {
+		this.stato = stato;
 	}
 
-	public LocalDateTime getData_nascita() {
-		return data_nascita;
+	public int getId_dipendente() {
+		return id_dipendente;
 	}
 
-	public void setData_nascita(LocalDateTime data_nascita) {
-		this.data_nascita = data_nascita;
+	public void setId_dipendente(int id_dipendente) {
+		this.id_dipendente = id_dipendente;
 	}
 
 	public String getUtente_creazione() {

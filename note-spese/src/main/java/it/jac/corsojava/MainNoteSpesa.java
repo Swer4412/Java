@@ -1,24 +1,24 @@
 package it.jac.corsojava;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import it.jac.corsojava.dao.ServiceNoteSpesa;
-import it.jac.corsojava.dao.NoteSpesaDao;
-import it.jac.corsojava.entity.VoceSpesa;
+import it.jac.corsojava.entity.Entity;
+import it.jac.corsojava.entity.NotaSpesa;
 import it.jac.corsojava.entity.StatoSpesa;
+import it.jac.corsojava.entity.VoceSpesa;
 
 public class MainNoteSpesa {
 
 	private static Logger log = LogManager.getLogger(MainNoteSpesa.class);
 
 	public static void main(String[] args) {
+		
+		log.info("Applicazione avviata");
 
 		Scanner sc = new Scanner(System.in);
 		
@@ -60,14 +60,49 @@ public class MainNoteSpesa {
 			}
 			
 		} while (!esc);
-		
+		log.info("Applicazione terminata");
 		
 	}
 
 	private static void inserisciNotaSpese(Scanner sc, ServiceNoteSpesa service) {
 		
+		//Creo istanze
+		Entity entity = new Entity();
+		NotaSpesa notaSpesa = new NotaSpesa();
+		ArrayList<VoceSpesa> voci = new ArrayList<>();
 		
-		if (service.inserisci(entity)) {
+		//Riempio con input dell utente
+		System.out.println("Inserisci il tuo id: ");
+		notaSpesa.setId_dipendente(Integer.parseInt(sc.nextLine()));
+		
+		System.out.println("Inserisci codice nota spesa: ");
+		notaSpesa.setCodice(sc.nextLine());
+		
+		System.out.println("Inserisci mese di riferimento (aaaamm): ");
+		notaSpesa.setMese_rif(sc.nextLine());
+		
+		String str = null;
+		
+		//Riempio la lista delle voci spesa 
+		do {
+			
+			//Questa istanza di vocespesa viene poi inserita dentro la lista di tipo VoceSpesa
+			VoceSpesa voceSpesa = new VoceSpesa();
+			
+			System.out.println("Inserisci commento voce spesa: ");
+			voceSpesa.setCommento(sc.nextLine());
+			
+			System.out.println("Inserisci importo voce spesa: ");
+			voceSpesa.setImporto(Integer.parseInt(sc.nextLine()));
+			
+			voci.add(voceSpesa);
+			
+		} while (str !="");		
+		
+		entity.setNota_spesa(notaSpesa);
+		entity.setVoci_spesa(voci);
+		
+		if (service.registra(entity)) {
 			System.out.println("Inserimento avvenuto con successo");
 		} else {
 			System.out.println("Problema nell'inserimento");
@@ -76,7 +111,7 @@ public class MainNoteSpesa {
 
 	private static void eliminaNotaSpese(Scanner sc, ServiceNoteSpesa service) {
 		
-		System.out.println("Inserisci l'id della nota spese da eliminare: ");
+		System.out.println("Inserisci l'id della nota spesa da eliminare: ");
 		int id =Integer.parseInt(sc.nextLine());
 		
 		if (service.elimina(id)) {
@@ -89,7 +124,10 @@ public class MainNoteSpesa {
 
 	private static void visualizzaNoteValidare(Scanner sc, ServiceNoteSpesa service) {
 		
-		System.out.println(service.visualizza("registrata"));
+		for (Entity entity : service.visualizza()) {
+			if (entity.getNota_spesa().getStato().equals(StatoSpesa.REGISTRATA));
+			
+		}
 		
 	}
 
@@ -102,9 +140,11 @@ public class MainNoteSpesa {
 		
 		System.out.println("Inserisci lo stato che vuoi visualizzare: ");
 		String stato = sc.nextLine();
+		//Traduci la stringa in StatoSpesa
 		
-		
-		System.out.println(service.visualizza(stato);
+		for (Entity entity : service.visualizza()) {
+			if (entity.getNota_spesa().getStato().equals()); 
+		}
 		
 	}
 

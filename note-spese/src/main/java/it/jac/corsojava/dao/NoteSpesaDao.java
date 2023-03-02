@@ -13,7 +13,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import it.jac.corsojava.entity.VoceSpesa;
+import it.jac.corsojava.entity.Entity;
 import it.jac.corsojava.entity.StatoSpesa;
 
 public class NoteSpesaDao {
@@ -42,8 +42,10 @@ public class NoteSpesaDao {
 		return result;
 	}
 
-	public void create(VoceSpesa voceSpesa) {
-
+	public boolean create(Entity entity) {
+		
+		boolean success = false;
+		
 		Connection conn = null;
 		PreparedStatement pstm = null;
 
@@ -59,7 +61,7 @@ public class NoteSpesaDao {
 
 			pstm = conn.prepareStatement(sb.toString());
 
-			pstm.setString(1, voceSpesa.getCod());
+			pstm.setString(1, entity.get());
 
 			int rowsUpdated = pstm.executeUpdate();
 
@@ -76,11 +78,13 @@ public class NoteSpesaDao {
 			}
 
 		}
+		
+		return success;
 	}
 
-	public List<VoceSpesa> read() {
+	public ArrayList<Entity> read() {
 
-		List<VoceSpesa> result = new ArrayList<>();
+		ArrayList<Entity> entity = new ArrayList<>();
 
 		Connection conn = null;
 		PreparedStatement pstm = null;
@@ -109,7 +113,7 @@ public class NoteSpesaDao {
 				LocalDateTime dataModifica = rs.getTimestamp("data_creazione").toLocalDateTime();
 				String utenteModifica = rs.getString("utente_creazione");
 
-				VoceSpesa prod = new VoceSpesa();
+				Entity prod = new Entity();
 
 				prod.setId(id);
 				prod.setCod(cod);
@@ -137,10 +141,10 @@ public class NoteSpesaDao {
 
 		}
 
-		return result;
+		return entity;
 	}
 
-	public void update(VoceSpesa prod) {
+	public void update(Entity prod) {
 
 		Connection conn = null;
 		PreparedStatement pstm = null;
@@ -176,7 +180,7 @@ public class NoteSpesaDao {
 		}
 	}
 
-	public static void delete(VoceSpesa voceSpesa) {
+	public void delete(Entity entity) {
 
 	}
 }

@@ -2,32 +2,27 @@ package it.jac.corsojava.entity;
 
 import java.time.LocalDateTime;
 
-// rappresenta l'entità da archiviare
 public class VoceSpesa {
-
-	// identificativo del prodotto
+	
 	private int id;
+	
+	private String commento;
+	
+	private double importo;
+	
+	private int id_nota_spesa;
+	
+	private int id_categoria;
+	
+	private String utente_creazione;
+	
+	private LocalDateTime data_creazione;
 
-	// codice del prodotto
-	private String cod;
+	private String utente_modifica;
+	
+	private LocalDateTime data_modifica;
 
-	// descrizione del prodotto
-	private String descrizione;
-
-	// prezzo del prodotto
-	private double prezzo;
-
-	// stato del prodotto
-	private StatoSpesa stato;
-
-	private String utenteCreazione;
-
-	private String utenteModifica;
-
-	private LocalDateTime dataCreazione;
-
-	private LocalDateTime dataModifica;
-
+	
 	public int getId() {
 		return id;
 	}
@@ -36,74 +31,69 @@ public class VoceSpesa {
 		this.id = id;
 	}
 
-	public String getCod() {
-		return cod;
+	public String getCommento() {
+		return commento;
 	}
 
-	public void setCod(String cod) {
-		this.cod = cod;
+	public void setCommento(String commento) {
+		this.commento = commento;
 	}
 
-	public String getDescrizione() {
-		return descrizione;
+	public double getImporto() {
+		return importo;
 	}
 
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
+	public void setImporto(double importo) {
+		this.importo = importo;
 	}
 
-	public double getPrezzo() {
-		return prezzo;
+	public int getId_nota_spesa() {
+		return id_nota_spesa;
 	}
 
-	public void setPrezzo(double prezzo) {
-		this.prezzo = prezzo;
+	public void setId_nota_spesa(int id_nota_spesa) {
+		this.id_nota_spesa = id_nota_spesa;
 	}
 
-	public StatoSpesa getStato() {
-		return stato;
+	public int getId_categoria() {
+		return id_categoria;
 	}
 
-	public void setStato(StatoSpesa stato) {
-		this.stato = stato;
+	public void setId_categoria(int id_categoria) {
+		this.id_categoria = id_categoria;
 	}
 
-	@Override
-	public String toString() {
-		return "Prodotto [id=" + id + ", cod=" + cod + ", descrizione=" + descrizione + ", prezzo=" + prezzo
-				+ ", stato=" + stato + "]";
+	public String getUtente_creazione() {
+		return utente_creazione;
 	}
 
-	public String getUtenteCreazione() {
-		return utenteCreazione;
+	public void setUtente_creazione(String utente_creazione) {
+		this.utente_creazione = utente_creazione;
 	}
 
-	public void setUtenteCreazione(String utenteCreazione) {
-		this.utenteCreazione = utenteCreazione;
+	public LocalDateTime getData_creazione() {
+		return data_creazione;
 	}
 
-	public String getUtenteModifica() {
-		return utenteModifica;
+	public void setData_creazione(LocalDateTime data_creazione) {
+		this.data_creazione = data_creazione;
 	}
 
-	public void setUtenteModifica(String utenteModifica) {
-		this.utenteModifica = utenteModifica;
+	public String getUtente_modifica() {
+		return utente_modifica;
 	}
 
-	public LocalDateTime getDataCreazione() {
-		return dataCreazione;
+	public void setUtente_modifica(String utente_modifica) {
+		this.utente_modifica = utente_modifica;
 	}
 
-	public void setDataCreazione(LocalDateTime dataCreazione) {
-		this.dataCreazione = dataCreazione;
+	public LocalDateTime getData_modifica() {
+		return data_modifica;
 	}
 
-	public LocalDateTime getDataModifica() {
-		return dataModifica;
+	public void setData_modifica(LocalDateTime data_modifica) {
+		this.data_modifica = data_modifica;
 	}
-
-	public void setDataModifica(LocalDateTime dataModifica) {
-		this.dataModifica = dataModifica;
-	}
-
+	
+	
 }

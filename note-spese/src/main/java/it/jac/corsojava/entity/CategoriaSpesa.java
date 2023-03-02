@@ -2,19 +2,13 @@ package it.jac.corsojava.entity;
 
 import java.time.LocalDateTime;
 
-public class Dipendente {
+public class CategoriaSpesa {
 	
 	private int id;
 	
-	private String matricola;
+	private String cod;
 	
-	private String nome;
-	
-	private String cognome;
-	
-	private int id_societa;
-	
-	private LocalDateTime data_nascita;
+	private String descrizione;
 	
 	private String utente_creazione;
 	
@@ -33,44 +27,20 @@ public class Dipendente {
 		this.id = id;
 	}
 
-	public String getMatricola() {
-		return matricola;
+	public String getCod() {
+		return cod;
 	}
 
-	public void setMatricola(String matricola) {
-		this.matricola = matricola;
+	public void setCod(String cod) {
+		this.cod = cod;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getDescrizione() {
+		return descrizione;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCognome() {
-		return cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
-
-	public int getId_societa() {
-		return id_societa;
-	}
-
-	public void setId_societa(int id_societa) {
-		this.id_societa = id_societa;
-	}
-
-	public LocalDateTime getData_nascita() {
-		return data_nascita;
-	}
-
-	public void setData_nascita(LocalDateTime data_nascita) {
-		this.data_nascita = data_nascita;
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 	public String getUtente_creazione() {
@@ -104,7 +74,6 @@ public class Dipendente {
 	public void setData_modifica(LocalDateTime data_modifica) {
 		this.data_modifica = data_modifica;
 	}
-	
 	
 	
 }
