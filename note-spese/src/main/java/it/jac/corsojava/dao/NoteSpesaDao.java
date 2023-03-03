@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import it.jac.corsojava.entity.Entity;
 import it.jac.corsojava.entity.NotaSpesa;
+import it.jac.corsojava.entity.Societa;
 import it.jac.corsojava.entity.StatoSpesa;
 import it.jac.corsojava.entity.VoceSpesa;
 
@@ -52,20 +52,28 @@ public class NoteSpesaDao {
 		//Estraggo gli oggetti che mi servono da entity
 		NotaSpesa ns = entity.getNota_spesa();
 		ArrayList<VoceSpesa> voci = entity.getVoci_spesa();
+		//Non estraggo dipendente e categoria perchè li ho gia inseriti in questi 2 oggetti
 		
 		//INSERIMENTO
 		//Inserisco la nota spesa
-		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT INTO note_spese.nota_spesa");
-		sb.append("(cod, mese_rif, importo_totale, stato, id_dipendente, utente_creazione, data_creazione)");
-		sb.append("VALUES");
-		sb.append(" (?, ?, ?, ?, ?, ?, ?)");
-
+		
+		StringBuilder notaSpesaSb = new StringBuilder();
+		notaSpesaSb.append("INSERT INTO note_spese.nota_spesa");
+		notaSpesaSb.append(" (cod, mese_rif, importo_totale, stato, id_dipendente, utente_creazione, data_creazione)");
+		notaSpesaSb.append(" VALUES");
+		notaSpesaSb.append(" (?, ?, ?, ?, ?, ?, ?)");
+		
+		StringBuilder voceSpesaSb = new StringBuilder();
+		notaSpesaSb.append("INSERT INTO note_spese.voce_spesa");
+		notaSpesaSb.append(" (commento, importo, id_nota_spesa, id_categoria, utente_creazione, data_creazione)");
+		notaSpesaSb.append(" VALUES");
+		notaSpesaSb.append(" (?, ?, ?, ?, ?, ?)");
+		
 		try {
 
 			conn = openConnection();
 
-			pstm = conn.prepareStatement(sb.toString());
+			pstm = conn.prepareStatement(notaSpesaSb.toString());
 
 			pstm.setString(1, ns.getCodice());
 			pstm.setString(1, ns.getMese_rif());
@@ -76,8 +84,29 @@ public class NoteSpesaDao {
 			pstm.setTimestamp(1, java.sql.Timestamp.valueOf(ns.getData_creazione()));
 
 			int rowsUpdated = pstm.executeUpdate();
+			
+			log.debug("Aggiornate {} righe in nota_spesa ", rowsUpdated);
+			
+			//Inserisco le voci spesa
+			for (VoceSpesa vs : voci) {
+				
+				//Devo trovare l'id generato dal database in modo da linkare le voci spesa alla nota spesa
+				int id_ns = read().get(read().size()-1).getNota_spesa().getId(); 
 
-			log.debug("Aggiornate {} righe ", rowsUpdated);
+				pstm = conn.prepareStatement(voceSpesaSb.toString());
+
+				pstm.setString(1, vs.getCommento());
+				pstm.setDouble(1, vs.getImporto());
+				pstm.setInt(1, id_ns);
+				pstm.setInt(1, vs.getId_categoria());
+				pstm.setString(1, vs.getUtente_creazione());
+				pstm.setTimestamp(1, java.sql.Timestamp.valueOf(vs.getData_creazione()));
+				
+				rowsUpdated += pstm.executeUpdate();
+				
+			}
+			log.debug("Aggiornate {} righe in voceSpesa ", rowsUpdated-1);
+			
 
 		} catch (SQLException e) {
 			log.error("Errore nell inserimento dei dati ", e);
@@ -96,48 +125,61 @@ public class NoteSpesaDao {
 
 	public ArrayList<Entity> read() {
 
-		ArrayList<Entity> entity = new ArrayList<>();
+		ArrayList<Entity> entitys = new ArrayList<>();
 
 		Connection conn = null;
 		PreparedStatement pstm = null;
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(
-				"SELECT id,cod,descrizione,prezzo,stato,data_creazione,utente_creazione,data_modifica,utente_modifica");
-		sb.append(" FROM prodotto");
-
+		
+		//Creo i vari stringbuilder
+		//Societa
+		StringBuilder societaSb = new StringBuilder();
+		societaSb.append(
+				"SELECT id,cod,denominazione,utente_creazione,data_creazione,utente_modifica,data_modifica");
+		societaSb.append(" FROM societa");
+		
+		//Dipendente
+		StringBuilder dipendenteSb = new StringBuilder();
+		dipendenteSb.append(
+				"SELECT id,matricola,nome,cognome,id_societa,data_nascita,utente_creazione,data_creazione,utente_modifica,data_modifica");
+		dipendenteSb.append(" FROM dipendente");
+		
+		//Nota Spesa
+		StringBuilder notaSpesaSb = new StringBuilder();
+		notaSpesaSb.append(
+				"SELECT id,cod,mese_rif,importo_totale,stato,id_dipendente,utente_creazione,data_creazione,utente_modifica,data_modifica");
+		notaSpesaSb.append(" FROM nota_spesa");
+		
+		//Voce Spesa
+		StringBuilder voceSpesaSb = new StringBuilder();
+		notaSpesaSb.append(
+				"SELECT id,commento,importo,id_nota_spesa,id_categoria,utente_creazione,data_creazione,utente_modifica,data_modifica");
+		notaSpesaSb.append(" FROM voce_spesa");
+		
+		//Categoria Spesa
+		StringBuilder categoriaSb = new StringBuilder();
+		societaSb.append(
+				"SELECT id,cod,descrizione,utente_creazione,data_creazione,utente_modifica,data_modifica");
+		societaSb.append(" FROM societa");
+		
 		try {
 
 			conn = openConnection();
-			pstm = conn.prepareStatement(sb.toString());
+			
+			//Prendo le societa
+			pstm = conn.prepareStatement(societaSb.toString());
 
 			ResultSet rs = pstm.executeQuery();
 
 			while (rs.next()) {
-
+				
+				Societa so = new Societa();
+				
 				int id = rs.getInt("id");
-				String cod = rs.getString("cod");
-				String descrizione = rs.getString("descrizione");
-				double prezzo = rs.getDouble("prezzo");
-				String stato = rs.getString("stato");
-				LocalDateTime dataCreazione = rs.getTimestamp("data_creazione").toLocalDateTime();
-				String utenteCreazione = rs.getString("utente_creazione");
-				LocalDateTime dataModifica = rs.getTimestamp("data_creazione").toLocalDateTime();
-				String utenteModifica = rs.getString("utente_creazione");
 
-				Entity prod = new Entity();
+				so.setId(id);
+				
 
-				prod.setId(id);
-				prod.setCod(cod);
-				prod.setDescrizione(descrizione);
-				prod.setPrezzo(prezzo);
-				prod.setStato(StatoSpesa.valueOf(stato));
-				prod.setDataCreazione(dataCreazione);
-				prod.setUtenteCreazione(utenteCreazione);
-				prod.setDataModifica(dataModifica);
-				prod.setUtenteModifica(utenteModifica);
-
-				result.add(prod);
+				entitys.add(so);
 
 			}
 
@@ -193,6 +235,7 @@ public class NoteSpesaDao {
 	}
 
 	public void delete(Entity entity) {
-
+		
 	}
+	
 }

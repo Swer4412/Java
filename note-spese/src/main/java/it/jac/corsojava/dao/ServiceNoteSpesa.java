@@ -20,13 +20,14 @@ public class ServiceNoteSpesa {
 
 	public boolean registra(Entity entity) {
 		
-		//Impsto proprietà di nota_spesa
+		//Imposto proprietà di nota_spesa
 		NotaSpesa notaSpesa = entity.getNota_spesa();
 		
+	//Ho chiesto all'utente la sua matricola e la categoria, ora devo trovare gli id di quest'ultimi estraendoli dal database
 		//Cerco l'id dalla matricola
 		for (Entity ent : dao.read()) { //Per ogni entità trovata nel database
 			if (ent.getDipendente().getMatricola() //Matricola presa dal database
-				.equals(entity.getDipendente().getMatricola())) { //Matricola inserita dall' utente
+				.equals(entity.getDipendente().getMatricola())) { //Matricola inserita dall'utente
 				
 				notaSpesa.setId_dipendente(ent.getDipendente().getId()); //Prendo l'id del dipendente di tale matricola
 				break; //Una volta trovato, non serve più che si ripeta
@@ -34,23 +35,32 @@ public class ServiceNoteSpesa {
 			}
 		}
 		
-		notaSpesa.setId_dipendente( //Imposto l'id del dipendente
-				dao.read().get(dao.read().size()-1) //Trovo l'elemento dell'arraylist in ultima posizione
-				.getDipendente().getId()); //Di questo elemento prendo dipendente e di dipendente prendo l'id
-		
-		notaSpesa.setStato(StatoSpesa.REGISTRATA);
-		notaSpesa.setUtente_creazione("java");
-		notaSpesa.setData_creazione(LocalDateTime.now());
-		
 		//Imposto proprietà per ogni istanza dentro la lista voci spesa
 		double importo = 0;
-		for (VoceSpesa voceSpesa : entity.getVoci_spesa()) {
-			voceSpesa.setUtente_creazione("java");
-			voceSpesa.setData_creazione(LocalDateTime.now());
-			importo += voceSpesa.getImporto(); //Trovo l'importo totale
+		for (VoceSpesa vs : entity.getVoci_spesa()) {
+			vs.setUtente_creazione("java");
+			vs.setData_creazione(LocalDateTime.now());
+			importo += vs.getImporto(); //Trovo l'importo totale
+			
+			//Cerco l'id dalla categoria
+			for (Entity ent : dao.read()) { //Per ogni entità trovata nel database
+				if (ent.getCategoria_spesa().getDescrizione() //Descrizione presa dal database
+					.equals(entity.getCategoria_spesa().getDescrizione())) { //Descrizione inserita dall'utente
+					
+					vs.setId_categoria(ent.getCategoria_spesa().getId()); //Prendo l'id della categoria di tale descrizione
+					break; //Una volta trovato, non serve più che si ripeta
+					
+				}
+			}
+			
 		}
 		
 		notaSpesa.setImporto_totale(importo);
+		
+		//Inserisco dati "nascosti" all'utente
+		notaSpesa.setStato(StatoSpesa.REGISTRATA);
+		notaSpesa.setUtente_creazione("java");
+		notaSpesa.setData_creazione(LocalDateTime.now());
 		
 		//Inserisco la entity completa nel database
 		boolean success = dao.create(entity);

@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import it.jac.corsojava.dao.ServiceNoteSpesa;
+import it.jac.corsojava.entity.CategoriaSpesa;
+import it.jac.corsojava.entity.Dipendente;
 import it.jac.corsojava.entity.Entity;
 import it.jac.corsojava.entity.NotaSpesa;
 import it.jac.corsojava.entity.StatoSpesa;
@@ -68,12 +70,15 @@ public class MainNoteSpesa {
 		
 		//Creo istanze
 		Entity entity = new Entity();
+		
+		Dipendente dipendente = new Dipendente();
 		NotaSpesa notaSpesa = new NotaSpesa();
 		ArrayList<VoceSpesa> voci = new ArrayList<>();
+		CategoriaSpesa categoria = new CategoriaSpesa();
 		
 		//Riempio con input dell utente
 		System.out.println("Inserisci il tuo id: ");
-		notaSpesa.setId_dipendente(Integer.parseInt(sc.nextLine()));
+		dipendente.setMatricola(sc.nextLine());
 		
 		System.out.println("Inserisci codice nota spesa: ");
 		notaSpesa.setCodice(sc.nextLine());
@@ -93,7 +98,10 @@ public class MainNoteSpesa {
 			voceSpesa.setCommento(sc.nextLine());
 			
 			System.out.println("Inserisci importo voce spesa: ");
-			voceSpesa.setImporto(Integer.parseInt(sc.nextLine()));
+			voceSpesa.setImporto(Double.parseDouble(sc.nextLine()));
+			
+			System.out.println("Inserisci l'id categoria voce spesa: ");
+			categoria.setDescrizione(sc.nextLine());
 			
 			voci.add(voceSpesa);
 			
