@@ -64,21 +64,36 @@ public class ServiceNoteSpesa {
 		
 		//Inserisco la entity completa nel database
 		boolean success = dao.create(entity);
+		log.info("Record aggiunto con successo");
 
 		return success;
 	}
 	
 	public boolean elimina(int id) {
-		
+
 		for (Entity entity : dao.read()) {
 			if (entity.getNota_spesa().getId() == id) { //Non riesco a capire equals e hashcode :(
 				
-				dao.delete(entity);
+				dao.delete(id);
+				return true;
 			
 			}
 		}
 		
-		return true;
+		return false;
+	}
+	
+	public boolean validaNota(int id) {
+		
+		for (Entity entity : dao.read()) {
+			if (entity.getNota_spesa().getId() == id) { //Non riesco a capire equals e hashcode :(
+				
+				entity.getNota_spesa().setStato(StatoSpesa.VALIDA);
+				dao.update(entity);
+			
+			}
+		}
+		return false;
 	}
 	
 	public ArrayList<Entity> visualizza() {

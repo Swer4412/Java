@@ -81,7 +81,7 @@ public class MainNoteSpesa {
 		dipendente.setMatricola(sc.nextLine());
 		
 		System.out.println("Inserisci codice nota spesa: ");
-		notaSpesa.setCodice(sc.nextLine());
+		notaSpesa.setCod(sc.nextLine());
 		
 		System.out.println("Inserisci mese di riferimento (aaaamm): ");
 		notaSpesa.setMese_rif(sc.nextLine());
@@ -133,7 +133,38 @@ public class MainNoteSpesa {
 	private static void visualizzaNoteValidare(Scanner sc, ServiceNoteSpesa service) {
 		
 		for (Entity entity : service.visualizza()) {
+			
+			System.out.println("_______________________________________________");
+			
 			if (entity.getNota_spesa().getStato().equals(StatoSpesa.REGISTRATA));
+			
+			NotaSpesa ns = entity.getNota_spesa(); 
+			//Intestazione 
+			System.out.println(String.format(
+					"%5s|%29s|%6s|%7.2f|%15s|%5s|",
+					"ID", "CODICE", "MESE", "IMPORTO", "STATO", "ID DIPENDENTE"
+					));
+			
+			System.out.println(String.format(
+					"%5s|%29s|%6s|%7.2f|%15s|%5s|",
+					ns.getId(), ns.getCod(), ns.getMese_rif(),
+					ns.getImporto_totale(), ns.getStato(), ns.getId_dipendente()
+					));
+			
+			for (VoceSpesa vs : entity.getVoci_spesa()) {
+				
+				System.out.println("_______________________________________________");
+				
+				System.out.println(String.format(
+						"%5s|%30s|%7.2f|%5S|%5s",
+						"ID", "COMMENTO", "IMPORTO", "ID NOTA SPESA", "ID CATEGORIA"
+						));
+				
+				System.out.println(String.format(
+						"%5s|%30s|%7.2f|%5S|%5s",
+						vs.getId(), vs.getCommento(), vs.getImporto(), vs.getId_nota_spesa(), vs.getId_categoria()
+						));
+			}
 			
 		}
 		
@@ -141,6 +172,14 @@ public class MainNoteSpesa {
 
 	private static void validaNota(Scanner sc, ServiceNoteSpesa service) {
 		
+		System.out.println("Inserisci l'id della nota che vuoi validare: ");
+		int id = Integer.parseInt(sc.nextLine());
+		
+		if (service.validaNota(id)) {
+			log.info("Nota validata con successo");
+		} else {
+			log.info("Inserisci l'id della nota che vuoi validare: ");
+		}
 		
 		
 	}
@@ -168,7 +207,7 @@ public class MainNoteSpesa {
 			
 			System.out.println(String.format(
 					"%5s|%29s|%6s|%7.2f|%15s|%5s|",
-					ns.getId(), ns.getCodice(), ns.getMese_rif(),
+					ns.getId(), ns.getCod(), ns.getMese_rif(),
 					ns.getImporto_totale(), ns.getStato(), ns.getId_dipendente()
 					));
 			

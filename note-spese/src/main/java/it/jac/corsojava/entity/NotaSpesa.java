@@ -6,7 +6,7 @@ public class NotaSpesa {
 	
 	private int id;
 	
-	private String codice;
+	private String cod;
 	
 	private String mese_rif;
 	
@@ -32,12 +32,12 @@ public class NotaSpesa {
 		this.id = id;
 	}
 
-	public String getCodice() {
-		return codice;
+	public String getCod() {
+		return cod;
 	}
 
-	public void setCodice(String codice) {
-		this.codice = codice;
+	public void setCod(String cod) {
+		this.cod = cod;
 	}
 
 	public String getMese_rif() {
