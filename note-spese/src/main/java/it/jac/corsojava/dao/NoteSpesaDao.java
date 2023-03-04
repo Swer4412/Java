@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -132,36 +133,6 @@ public class NoteSpesaDao {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		
-		/* spero vivamente che non mi servano, ma per ora li tengo :(
-		//Creo i vari stringbuilder
-		//Societa
-		StringBuilder societaSb = new StringBuilder();
-		societaSb.append(
-				"SELECT id,cod,denominazione,utente_creazione,data_creazione,utente_modifica,data_modifica");
-		societaSb.append(" FROM societa");
-		
-		//Dipendente
-		StringBuilder dipendenteSb = new StringBuilder();
-		dipendenteSb.append(
-				"SELECT id,matricola,nome,cognome,id_societa,data_nascita,utente_creazione,data_creazione,utente_modifica,data_modifica");
-		dipendenteSb.append(" FROM dipendente");
-		
-		//Nota Spesa
-		StringBuilder notaSpesaSb = new StringBuilder();
-		notaSpesaSb.append(
-				"SELECT id,cod,mese_rif,importo_totale,stato,id_dipendente,utente_creazione,data_creazione,utente_modifica,data_modifica");
-		notaSpesaSb.append(" FROM nota_spesa");
-		
-		//Voce Spesa
-		
-		
-		//Categoria Spesa
-		StringBuilder categoriaSb = new StringBuilder();
-		societaSb.append(
-				"SELECT id,cod,descrizione,utente_creazione,data_creazione,utente_modifica,data_modifica");
-		societaSb.append(" FROM societa");
-		*/
-		
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				"SELECT *");
@@ -190,7 +161,9 @@ public class NoteSpesaDao {
 				so.setUtente_creazione(rs.getString("so.utente_creazione"));
 				so.setData_creazione(rs.getTimestamp("so.data_creazione").toLocalDateTime());
 				so.setUtente_modifica(rs.getString("so.utente_modifica"));
-				so.setData_modifica(rs.getTimestamp("so.data_modifica").toLocalDateTime());
+				try {
+					so.setData_modifica(rs.getTimestamp("so.data_modifica").toLocalDateTime());
+					} catch (Exception e) {so.setData_modifica(null); }
 				entity.setSocieta(so);
 				
 				
@@ -204,7 +177,9 @@ public class NoteSpesaDao {
 				dip.setUtente_creazione(rs.getString("dip.utente_creazione"));
 				dip.setData_creazione(rs.getTimestamp("dip.data_creazione").toLocalDateTime());
 				dip.setUtente_modifica(rs.getString("dip.utente_modifica"));
-				dip.setData_modifica(rs.getTimestamp("dip.data_modifica").toLocalDateTime());
+				try {
+					dip.setData_modifica(rs.getTimestamp("dip.data_modifica").toLocalDateTime());
+					} catch (Exception e) {dip.setData_modifica(null); }
 				entity.setDipendente(dip);
 				
 				
@@ -218,7 +193,9 @@ public class NoteSpesaDao {
 				ns.setUtente_creazione(rs.getString("ns.utente_creazione"));
 				ns.setData_creazione(rs.getTimestamp("ns.data_creazione").toLocalDateTime());
 				ns.setUtente_modifica(rs.getString("ns.utente_modifica"));
-				ns.setData_modifica(rs.getTimestamp("ns.data_modifica").toLocalDateTime());
+				try {
+					ns.setData_modifica(rs.getTimestamp("ns.data_modifica").toLocalDateTime());
+					} catch (Exception e) {ns.setData_modifica(null); }
 				entity.setNota_spesa(ns);
 				
 				
@@ -230,10 +207,12 @@ public class NoteSpesaDao {
 						"SELECT id,commento,importo,id_nota_spesa,id_categoria,utente_creazione,data_creazione,utente_modifica,data_modifica");
 				voceSpesaSb.append(" FROM voce_spesa");
 				
+				Connection con = null;
+				con = openConnection();
 				PreparedStatement pstmm = null;
-				pstmm = conn.prepareStatement(voceSpesaSb.toString());
+				pstmm = con.prepareStatement(voceSpesaSb.toString());
 
-				ResultSet rsVs = pstm.executeQuery();
+				ResultSet rsVs = pstmm.executeQuery();
 				
 				//Ciclo tutte le voci spesa
 				while (rsVs.next()) {
@@ -248,11 +227,19 @@ public class NoteSpesaDao {
 					vs.setUtente_creazione(rsVs.getString("utente_creazione"));
 					vs.setData_creazione(rsVs.getTimestamp("data_creazione").toLocalDateTime());
 					vs.setUtente_modifica(rsVs.getString("utente_modifica"));
-					vs.setData_modifica(rsVs.getTimestamp("data_modifica").toLocalDateTime());
+					try {
+						vs.setData_modifica(rs.getTimestamp("vs.data_modifica").toLocalDateTime());
+						} catch (Exception e) {vs.setData_modifica(null); }
 					
 					voci.add(vs);
 					}
 				}
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// Non faccio nulla
+				}
+				
 				entity.setVoci_spesa(voci);
 				
 				CategoriaSpesa cat = new CategoriaSpesa();
@@ -263,7 +250,9 @@ public class NoteSpesaDao {
 				cat.setUtente_creazione(rs.getString("cat.utente_creazione"));
 				cat.setData_creazione(rs.getTimestamp("cat.data_creazione").toLocalDateTime());
 				cat.setUtente_modifica(rs.getString("cat.utente_modifica"));
-				cat.setData_modifica(rs.getTimestamp("cat.data_modifica").toLocalDateTime());
+				try {
+					cat.setData_modifica(rs.getTimestamp("cat.data_modifica").toLocalDateTime());
+					} catch (Exception e) {cat.setData_modifica(null); }
 				entity.setCategoria_spesa(cat);
 				
 				//Aggiungo l'entità alla lista
@@ -284,6 +273,16 @@ public class NoteSpesaDao {
 
 		return entityList;
 	}
+	
+	private ArrayList<Entity> removeDuplicates(ArrayList<Entity> entityList) {
+		for (Entity ent : entityList) {
+			HashSet<Societa> soHs = new HashSet<>();
+			ent.getSocieta().forEach(value -> { soHs.add(value); });
+		}
+		
+	}
+	
+	
 
 	public void update(Entity entity) {
 

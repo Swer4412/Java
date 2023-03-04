@@ -77,7 +77,7 @@ public class MainNoteSpesa {
 		CategoriaSpesa categoria = new CategoriaSpesa();
 		
 		//Riempio con input dell utente
-		System.out.println("Inserisci il tuo id: ");
+		System.out.println("Inserisci la tua matricola: ");
 		dipendente.setMatricola(sc.nextLine());
 		
 		System.out.println("Inserisci codice nota spesa: ");
@@ -88,24 +88,30 @@ public class MainNoteSpesa {
 		
 		String str = null;
 		
-		//Riempio la lista delle voci spesa 
+		//Riempio la lista delle voci spesa
+		int cont = 1;
 		do {
 			
 			//Questa istanza di vocespesa viene poi inserita dentro la lista di tipo VoceSpesa
 			VoceSpesa voceSpesa = new VoceSpesa();
 			
-			System.out.println("Inserisci commento voce spesa: ");
+			System.out.println("Inserisci commento" + cont + "° voce spesa: ");
 			voceSpesa.setCommento(sc.nextLine());
 			
-			System.out.println("Inserisci importo voce spesa: ");
+			if (str == "99") { 
+				break;
+				}
+			
+			System.out.println("Inserisci importo" + cont + "° voce spesa: ");
 			voceSpesa.setImporto(Double.parseDouble(sc.nextLine()));
 			
-			System.out.println("Inserisci l'id categoria voce spesa: ");
+			System.out.println("Inserisci la categoria della " + cont + "° voce spesa: ");
 			categoria.setDescrizione(sc.nextLine());
 			
 			voci.add(voceSpesa);
+			cont++;
 			
-		} while (str !="");		
+		} while (str !="99");		
 		
 		entity.setNota_spesa(notaSpesa);
 		entity.setVoci_spesa(voci);
@@ -134,38 +140,40 @@ public class MainNoteSpesa {
 		
 		for (Entity entity : service.visualizza()) {
 			
-			System.out.println("_______________________________________________");
-			
-			if (entity.getNota_spesa().getStato().equals(StatoSpesa.REGISTRATA));
+			if (entity.getNota_spesa().getStato().equals(StatoSpesa.REGISTRATA)) {
 			
 			NotaSpesa ns = entity.getNota_spesa(); 
 			//Intestazione 
+			System.out.println("NOTA SPESA " + ns.getId());
+			System.out.println("-------------------------------------------------------------------------");
 			System.out.println(String.format(
-					"%5s|%29s|%6s|%7.2f|%15s|%5s|",
-					"ID", "CODICE", "MESE", "IMPORTO", "STATO", "ID DIPENDENTE"
+					"%5s|%29s|%6s|%9s|%15s|%6s|",
+					"ID", "CODICE", "MESE", "IMPORTO", "STATO", "ID DIP"
 					));
 			
 			System.out.println(String.format(
-					"%5s|%29s|%6s|%7.2f|%15s|%5s|",
+					"%5s|%29s|%6s|%9s|%15s|%6s|",
 					ns.getId(), ns.getCod(), ns.getMese_rif(),
 					ns.getImporto_totale(), ns.getStato(), ns.getId_dipendente()
 					));
 			
 			for (VoceSpesa vs : entity.getVoci_spesa()) {
 				
-				System.out.println("_______________________________________________");
+				System.out.println("VOCE SPESA " + vs.getId());
 				
 				System.out.println(String.format(
-						"%5s|%30s|%7.2f|%5S|%5s",
-						"ID", "COMMENTO", "IMPORTO", "ID NOTA SPESA", "ID CATEGORIA"
+						"%5s|%30s|%9s|%5s|%6s",
+						"ID", "COMMENTO", "IMPORTO", "ID NS", "ID CAT"
 						));
 				
 				System.out.println(String.format(
-						"%5s|%30s|%7.2f|%5S|%5s",
+						"%5s|%30s|%9s|%5s|%6s",
 						vs.getId(), vs.getCommento(), vs.getImporto(), vs.getId_nota_spesa(), vs.getId_categoria()
 						));
+				System.out.println("");
 			}
-			
+		
+		}
 		}
 		
 	}
