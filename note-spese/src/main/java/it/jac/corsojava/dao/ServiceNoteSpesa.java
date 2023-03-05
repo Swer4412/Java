@@ -89,6 +89,8 @@ public class ServiceNoteSpesa {
 			if (entity.getNota_spesa().getId() == id) { //Non riesco a capire equals e hashcode :(
 				
 				entity.getNota_spesa().setStato(StatoSpesa.VALIDA);
+				entity.getNota_spesa().setUtente_modifica("java");
+				entity.getNota_spesa().setData_modifica(LocalDateTime.now());
 				dao.update(entity);
 			
 			}

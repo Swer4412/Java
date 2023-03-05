@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -133,6 +132,13 @@ public class NoteSpesaDao {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		
+		//Dichiaro liste per il controllo dell'univocità
+		ArrayList<Integer> soList = new ArrayList<>();
+		ArrayList<Integer> dipList = new ArrayList<>();
+		ArrayList<Integer> nsList = new ArrayList<>();
+		ArrayList<Integer> vsList = new ArrayList<>();
+		ArrayList<Integer> catList = new ArrayList<>();
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				"SELECT *");
@@ -154,50 +160,64 @@ public class NoteSpesaDao {
 				
 				Entity entity = new Entity();
 				
-				Societa so = new Societa();
-				so.setId(rs.getInt("so.id"));
-				so.setCod(rs.getString("so.cod"));
-				so.setDenominazione(rs.getString("so.denominazione"));
-				so.setUtente_creazione(rs.getString("so.utente_creazione"));
-				so.setData_creazione(rs.getTimestamp("so.data_creazione").toLocalDateTime());
-				so.setUtente_modifica(rs.getString("so.utente_modifica"));
-				try {
-					so.setData_modifica(rs.getTimestamp("so.data_modifica").toLocalDateTime());
-					} catch (Exception e) {so.setData_modifica(null); }
-				entity.setSocieta(so);
+				int soId = rs.getInt("so.id");
 				
+				if (!soList.contains(soId)) { //Controllo se l'id è gia stato registrato
+					soList.add(soId); //Aggiungo alla lista degli id registrati
+					
+					Societa so = new Societa();
+					so.setId(soId);
+					so.setCod(rs.getString("so.cod"));
+					so.setDenominazione(rs.getString("so.denominazione"));
+					so.setUtente_creazione(rs.getString("so.utente_creazione"));
+					so.setData_creazione(rs.getTimestamp("so.data_creazione").toLocalDateTime());
+					so.setUtente_modifica(rs.getString("so.utente_modifica"));
+					try {
+						so.setData_modifica(rs.getTimestamp("so.data_modifica").toLocalDateTime());
+						} catch (Exception e) {so.setData_modifica(null); }
+					entity.setSocieta(so);
+				}
 				
-				Dipendente dip = new Dipendente();
-				dip.setId(rs.getInt("dip.id"));
-				dip.setMatricola(rs.getString("dip.utente_creazione"));
-				dip.setNome(rs.getString("dip.utente_creazione"));
-				dip.setCognome(rs.getString("dip.utente_creazione"));
-				dip.setId_societa(rs.getInt("dip.id_societa"));
-				dip.setData_nascita(rs.getTimestamp("dip.data_nascita").toLocalDateTime());
-				dip.setUtente_creazione(rs.getString("dip.utente_creazione"));
-				dip.setData_creazione(rs.getTimestamp("dip.data_creazione").toLocalDateTime());
-				dip.setUtente_modifica(rs.getString("dip.utente_modifica"));
-				try {
-					dip.setData_modifica(rs.getTimestamp("dip.data_modifica").toLocalDateTime());
-					} catch (Exception e) {dip.setData_modifica(null); }
-				entity.setDipendente(dip);
+				int dipId = rs.getInt("dip.id");
 				
+				if (!dipList.contains(dipId)) { 
+					dipList.add(dipId);
+					
+					Dipendente dip = new Dipendente();
+					dip.setId(dipId);
+					dip.setMatricola(rs.getString("dip.utente_creazione"));
+					dip.setNome(rs.getString("dip.utente_creazione"));
+					dip.setCognome(rs.getString("dip.utente_creazione"));
+					dip.setId_societa(rs.getInt("dip.id_societa"));
+					dip.setData_nascita(rs.getTimestamp("dip.data_nascita").toLocalDateTime());
+					dip.setUtente_creazione(rs.getString("dip.utente_creazione"));
+					dip.setData_creazione(rs.getTimestamp("dip.data_creazione").toLocalDateTime());
+					dip.setUtente_modifica(rs.getString("dip.utente_modifica"));
+					try {
+						dip.setData_modifica(rs.getTimestamp("dip.data_modifica").toLocalDateTime());
+						} catch (Exception e) {dip.setData_modifica(null); }
+					entity.setDipendente(dip);
+				}
 				
-				NotaSpesa ns = new NotaSpesa();
-				ns.setId(rs.getInt("ns.id"));
-				ns.setCod(rs.getString("ns.cod"));
-				ns.setMese_rif(rs.getString("ns.mese_rif"));
-				ns.setImporto_totale(rs.getDouble("ns.importo_totale"));
-				ns.setStato(StatoSpesa.valueOf(rs.getString("stato")));
-				ns.setId_dipendente(rs.getInt("ns.id_dipendente"));
-				ns.setUtente_creazione(rs.getString("ns.utente_creazione"));
-				ns.setData_creazione(rs.getTimestamp("ns.data_creazione").toLocalDateTime());
-				ns.setUtente_modifica(rs.getString("ns.utente_modifica"));
-				try {
-					ns.setData_modifica(rs.getTimestamp("ns.data_modifica").toLocalDateTime());
-					} catch (Exception e) {ns.setData_modifica(null); }
-				entity.setNota_spesa(ns);
+				int nsId = rs.getInt("ns.id");
 				
+				if (!nsList.contains(nsId)) { 
+					nsList.add(nsId);
+					NotaSpesa ns = new NotaSpesa();
+					ns.setId(nsId);
+					ns.setCod(rs.getString("ns.cod"));
+					ns.setMese_rif(rs.getString("ns.mese_rif"));
+					ns.setImporto_totale(rs.getDouble("ns.importo_totale"));
+					ns.setStato(StatoSpesa.valueOf(rs.getString("stato")));
+					ns.setId_dipendente(rs.getInt("ns.id_dipendente"));
+					ns.setUtente_creazione(rs.getString("ns.utente_creazione"));
+					ns.setData_creazione(rs.getTimestamp("ns.data_creazione").toLocalDateTime());
+					ns.setUtente_modifica(rs.getString("ns.utente_modifica"));
+					try {
+						ns.setData_modifica(rs.getTimestamp("ns.data_modifica").toLocalDateTime());
+						} catch (Exception e) {ns.setData_modifica(null); }
+					entity.setNota_spesa(ns);
+				}
 				
 				//Inserisco le vociSpesa
 				ArrayList<VoceSpesa> voci = new ArrayList<>();
@@ -217,44 +237,54 @@ public class NoteSpesaDao {
 				//Ciclo tutte le voci spesa
 				while (rsVs.next()) {
 					if (rs.getInt("ns.id")==rsVs.getInt("id_nota_spesa")) { //Se l'id di questa notaSpesa è uguale a id_nota_spesa
-					VoceSpesa vs = new VoceSpesa();
-					
-					vs.setId(rsVs.getInt("id"));
-					vs.setCommento(rsVs.getString("commento"));
-					vs.setImporto(rsVs.getDouble("importo"));
-					vs.setId_nota_spesa(rsVs.getInt("id_nota_spesa"));
-					vs.setId_categoria(rsVs.getInt("id_categoria"));
-					vs.setUtente_creazione(rsVs.getString("utente_creazione"));
-					vs.setData_creazione(rsVs.getTimestamp("data_creazione").toLocalDateTime());
-					vs.setUtente_modifica(rsVs.getString("utente_modifica"));
-					try {
-						vs.setData_modifica(rs.getTimestamp("vs.data_modifica").toLocalDateTime());
-						} catch (Exception e) {vs.setData_modifica(null); }
-					
-					voci.add(vs);
+						
+						int vsId = rs.getInt("vs.id");
+						
+						if (!vsList.contains(vsId)) { 
+							vsList.add(vsId);
+							VoceSpesa vs = new VoceSpesa();
+						
+							vs.setId(vsId);
+							vs.setCommento(rsVs.getString("commento"));
+							vs.setImporto(rsVs.getDouble("importo"));
+							vs.setId_nota_spesa(rsVs.getInt("id_nota_spesa"));
+							vs.setId_categoria(rsVs.getInt("id_categoria"));
+							vs.setUtente_creazione(rsVs.getString("utente_creazione"));
+							vs.setData_creazione(rsVs.getTimestamp("data_creazione").toLocalDateTime());
+							vs.setUtente_modifica(rsVs.getString("utente_modifica"));
+							try {
+								vs.setData_modifica(rs.getTimestamp("vs.data_modifica").toLocalDateTime());
+								} catch (Exception e) {vs.setData_modifica(null); }
+							
+							voci.add(vs);
+							}
+						}
 					}
-				}
 				try {
 					con.close();
 				} catch (SQLException e) {
 					// Non faccio nulla
 				}
-				
 				entity.setVoci_spesa(voci);
 				
-				CategoriaSpesa cat = new CategoriaSpesa();
+				int catId = rs.getInt("cat.id");
 				
-				cat.setId(rs.getInt("cat.id"));
-				cat.setCod(rs.getString("cat.cod"));
-				cat.setUtente_creazione(rs.getString("cat.descrizione"));
-				cat.setUtente_creazione(rs.getString("cat.utente_creazione"));
-				cat.setData_creazione(rs.getTimestamp("cat.data_creazione").toLocalDateTime());
-				cat.setUtente_modifica(rs.getString("cat.utente_modifica"));
-				try {
-					cat.setData_modifica(rs.getTimestamp("cat.data_modifica").toLocalDateTime());
-					} catch (Exception e) {cat.setData_modifica(null); }
-				entity.setCategoria_spesa(cat);
+				if (!catList.contains(catId)) { 
+					catList.add(catId);
 				
+					CategoriaSpesa cat = new CategoriaSpesa();
+					
+					cat.setId(catId);
+					cat.setCod(rs.getString("cat.cod"));
+					cat.setUtente_creazione(rs.getString("cat.descrizione"));
+					cat.setUtente_creazione(rs.getString("cat.utente_creazione"));
+					cat.setData_creazione(rs.getTimestamp("cat.data_creazione").toLocalDateTime());
+					cat.setUtente_modifica(rs.getString("cat.utente_modifica"));
+					try {
+						cat.setData_modifica(rs.getTimestamp("cat.data_modifica").toLocalDateTime());
+						} catch (Exception e) {cat.setData_modifica(null); }
+					entity.setCategoria_spesa(cat);
+				}
 				//Aggiungo l'entità alla lista
 				entityList.add(entity);
 			}
@@ -274,13 +304,13 @@ public class NoteSpesaDao {
 		return entityList;
 	}
 	
-	private ArrayList<Entity> removeDuplicates(ArrayList<Entity> entityList) {
+	/*private ArrayList<Entity> removeDuplicates(ArrayList<Entity> entityList) {
 		for (Entity ent : entityList) {
 			HashSet<Societa> soHs = new HashSet<>();
 			ent.getSocieta().forEach(value -> { soHs.add(value); });
 		}
 		
-	}
+	}*/
 	
 	
 
@@ -293,7 +323,7 @@ public class NoteSpesaDao {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("UPDATE nota_spesa");
-		sb.append(" SET stato=?");
+		sb.append(" SET stato=?, utente_modifica=?, data_modifica=?");
 		sb.append(" WHERE id=?");
 
 		try {
@@ -302,7 +332,9 @@ public class NoteSpesaDao {
 			pstm = conn.prepareStatement(sb.toString());
 
 			pstm.setString(1, ns.getStato().toString());
-			pstm.setInt(2, ns.getId());
+			pstm.setString(2, ns.getUtente_modifica());
+			pstm.setTimestamp(3, java.sql.Timestamp.valueOf(ns.getData_modifica()));
+			pstm.setInt(4, ns.getId());
 
 			int rowsUpdated = pstm.executeUpdate(); // Una volta eseguito l'update ritorna quante righe sono state
 			// modificate

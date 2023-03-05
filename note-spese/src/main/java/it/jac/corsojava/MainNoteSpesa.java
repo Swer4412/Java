@@ -95,14 +95,15 @@ public class MainNoteSpesa {
 			//Questa istanza di vocespesa viene poi inserita dentro la lista di tipo VoceSpesa
 			VoceSpesa voceSpesa = new VoceSpesa();
 			
-			System.out.println("Inserisci commento" + cont + "° voce spesa: ");
-			voceSpesa.setCommento(sc.nextLine());
+			System.out.println("Inserisci commento " + cont + "° voce spesa: ");
+			str = sc.nextLine();
+			voceSpesa.setCommento(str);
 			
 			if (str == "99") { 
 				break;
 				}
 			
-			System.out.println("Inserisci importo" + cont + "° voce spesa: ");
+			System.out.println("Inserisci importo " + cont + "° voce spesa: ");
 			voceSpesa.setImporto(Double.parseDouble(sc.nextLine()));
 			
 			System.out.println("Inserisci la categoria della " + cont + "° voce spesa: ");
