@@ -203,6 +203,7 @@ public class NoteSpesaDao {
 				
 				if (!nsList.contains(nsId)) { 
 					nsList.add(nsId);
+					
 					NotaSpesa ns = new NotaSpesa();
 					ns.setId(nsId);
 					ns.setCod(rs.getString("ns.cod"));

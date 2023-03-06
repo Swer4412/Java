@@ -12,7 +12,7 @@ public class Dipendente {
 	
 	private String cognome;
 	
-	private int id_societa;
+	private Societa societa;
 	
 	private LocalDateTime data_nascita;
 	
@@ -57,12 +57,12 @@ public class Dipendente {
 		this.cognome = cognome;
 	}
 
-	public int getId_societa() {
-		return id_societa;
+	public Societa getSocieta() {
+		return societa;
 	}
 
-	public void setId_societa(int id_societa) {
-		this.id_societa = id_societa;
+	public void setSocieta(Societa societa) {
+		this.societa = societa;
 	}
 
 	public LocalDateTime getData_nascita() {

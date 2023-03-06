@@ -1,6 +1,7 @@
 package it.jac.corsojava.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class NotaSpesa {
 	
@@ -14,7 +15,9 @@ public class NotaSpesa {
 	
 	private StatoSpesa stato;
 	
-	private int id_dipendente;
+	private Dipendente dipendente;
+	
+	private ArrayList<VoceSpesa> voci_spesa;
 	
 	private String utente_creazione;
 	
@@ -64,12 +67,20 @@ public class NotaSpesa {
 		this.stato = stato;
 	}
 
-	public int getId_dipendente() {
-		return id_dipendente;
+	public Dipendente getDipendente() {
+		return dipendente;
 	}
 
-	public void setId_dipendente(int id_dipendente) {
-		this.id_dipendente = id_dipendente;
+	public void setDipendente(Dipendente dipendente) {
+		this.dipendente = dipendente;
+	}
+
+	public ArrayList<VoceSpesa> getVoci_spesa() {
+		return voci_spesa;
+	}
+
+	public void setVoci_spesa(ArrayList<VoceSpesa> voci_spesa) {
+		this.voci_spesa = voci_spesa;
 	}
 
 	public String getUtente_creazione() {

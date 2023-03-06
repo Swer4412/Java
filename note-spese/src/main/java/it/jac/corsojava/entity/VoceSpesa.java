@@ -10,9 +10,9 @@ public class VoceSpesa {
 	
 	private double importo;
 	
-	private int id_nota_spesa;
+	private NotaSpesa nota_spesa;
 	
-	private int id_categoria;
+	private CategoriaSpesa categoria_spesa;
 	
 	private String utente_creazione;
 	
@@ -47,20 +47,20 @@ public class VoceSpesa {
 		this.importo = importo;
 	}
 
-	public int getId_nota_spesa() {
-		return id_nota_spesa;
+	public NotaSpesa getNota_spesa() {
+		return nota_spesa;
 	}
 
-	public void setId_nota_spesa(int id_nota_spesa) {
-		this.id_nota_spesa = id_nota_spesa;
+	public void setId_nota_spesa(NotaSpesa nota_spesa) {
+		this.nota_spesa = nota_spesa;
 	}
 
-	public int getId_categoria() {
-		return id_categoria;
+	public CategoriaSpesa getCategoria_spesa() {
+		return categoria_spesa;
 	}
 
-	public void setId_categoria(int id_categoria) {
-		this.id_categoria = id_categoria;
+	public void setCategoria_spesa(CategoriaSpesa categoria_spesa) {
+		this.categoria_spesa = categoria_spesa;
 	}
 
 	public String getUtente_creazione() {
