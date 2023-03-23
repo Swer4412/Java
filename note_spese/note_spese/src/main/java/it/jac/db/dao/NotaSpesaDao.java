@@ -60,7 +60,7 @@ private static Logger log = LogManager.getLogger(CategoriaDao.class);
 
 			preparedStatement.executeUpdate(); //Adesso va in ram, non nel database
 			
-			//Generated keys prende le boh
+			//Generated keys prende tutte le cose generate nel database una volta eseguito executeUpdate()
 			ResultSet keys = preparedStatement.getGeneratedKeys();
 			if (keys.next()) {
 				entity.setId(keys.getInt(1));

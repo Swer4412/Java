@@ -105,15 +105,11 @@ public class NotaSpesaService {
 				v.setUtenteCreazione("java");
 				v.setDataCreazione(LocalDateTime.now());
 	
-	//			salvo la voce spesa...
-	//			ATTENZIONE! cosa succede una di queste operazioni non va a buon fine?
-	//			ormai la testata della nota spesa è stata inserita!
-	//			abbiamo bisogno di "eseguire" queste operazioni come se fossero 1 sola
-	//			TODO gestire la TRANSAZIONE
 				this.voceSpesaDao.save(v); //Se non va una nota spesa, ci troviamo una nota spesa
 			}
 			
 			//devo inviare il commit al database
+			//TransactionUtil → currentConnection → connection; questo vuol dire che .commit() è la funzione di connection
 			TransactionUtil.commit();
 			
 		} catch (Exception e) {
@@ -131,6 +127,7 @@ public class NotaSpesaService {
 		
 //		controllo se il dipendente relativo alla nota spesa esiste		
 		Dipendente dipendente = notaSpesa.getDipendente();
+		
 		Dipendente dipPersisted = this.dipendenteDao.findById(dipendente.getId());
 		if (dipPersisted == null) {
 			log.warn("Dipendente [id={}] not found", dipendente.getId());
@@ -148,14 +145,17 @@ public class NotaSpesaService {
 		
 		this.notaSpesaDao.update(persistedEntity);
 		
-//		rimuovo tutte le voci spesa esistenti
+//		rimuovo tutte le voci spesa relative alla nota spesa
+		//Qua prendo le voci spesa della persistedEntity
 		List<VoceSpesa> vociPersistedList = persistedEntity.getVociSpesa();
 		for(VoceSpesa v : vociPersistedList) {
 			
+			//Passo come parametro solo id perchè la cancellazione avviene una volta trovato l'id nel database
 			this.voceSpesaDao.delete(v.getId());
 		}
 		
 //		salvo le voci spesa (dopo averle rimosse poco prima equivale all'aggiornamento)
+		//Qua prendo le voci spesa della notaspesa
 		List<VoceSpesa> dettaglioList = notaSpesa.getVociSpesa();
 		for(VoceSpesa v : dettaglioList) {
 			
@@ -179,7 +179,7 @@ public class NotaSpesaService {
 	public void delete(int id, String matricola) throws EntityNotFoundException, ValidateNotaSpesaException {
 
 		log.info("Elimina NotaSpesa [id={}]");
-		
+		//Controllo che l'id corrisponda ad una nota spesa esistente
 		NotaSpesa persistedEntity = this.notaSpesaDao.findById(id);
 		if (persistedEntity == null) {
 			log.warn("NotaSpesa [id={}] not found", id);
@@ -294,6 +294,7 @@ public class NotaSpesaService {
 		}
 		
 		notaSpesa.setStato(STATO_VALIDA);
+		//persistedEntity è la nota spesa presa dal database, notaSpesa è quella inserita dall'utente
 		update(persistedEntity, notaSpesa);		
 		
 		log.info("NotaSpesa [id={}] modificata", id);

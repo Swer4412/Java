@@ -8,11 +8,11 @@ import it.jac.db.dao.BaseDao;
 public class TransactionUtil {
 	
 	//é una variabile che sa parlare con il thread corrente
+	//ThreadLocal permette di creare variabili locali ad un thread
 	private static ThreadLocal<Connection> currentConnection = new ThreadLocal<>();
+	//Creo un threadlocal di tipo connessione
 	
 	public static Connection getCurrentConnection() {
-		
-		
 		return currentConnection.get();
 	}
 	
@@ -28,7 +28,7 @@ public class TransactionUtil {
 			connection = dao.getConnection();
 			connection.setAutoCommit(false);
 			
-			//Passo la connessione al thread
+			//Passo la connessione al thread di tipo connection
 			currentConnection.set(connection);
 		} catch (SQLException e) {
 			throw new RuntimeException("Unable to open connection");

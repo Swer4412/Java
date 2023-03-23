@@ -25,16 +25,19 @@ public class MainNoteSpese {
 		System.out.println("*** APPLICAZIONE NOTE SPESE ***");
 		
 		Scanner scanner = new Scanner(System.in);
-
+		
+		//Questa funzione chiede la matricola e controlla che sia esistente
 		String matricola = richiediMatricola(scanner);
 		
 		boolean termina = false;
 		do {
 			
+			//DIPENDENTE (la funzione richiediMatricola ritorna una matricola se si fa login come dipendente)
 			if (matricola != null) {
 				System.out.println("1) Inserisci nota spesa");
 				System.out.println("2) Elimina nota spesa");
 			}
+			//ADMIN (la funzione richiediMatricola ritorna null se si fa login come amministratore)
 			if (matricola == null) {
 				
 				System.out.println("3) Elenco note spesa DA VALIDARE");
@@ -48,6 +51,7 @@ public class MainNoteSpese {
 			String scelta = scanner.nextLine();
 			switch (scelta) {
 			
+			//Non c'è alcun controllo, se amministatore scrive 1, viene avviata la creazione della nota spesa ugualmente
 			case "1":
 				creaNota(scanner, matricola);
 				break;
@@ -96,9 +100,11 @@ public class MainNoteSpese {
 		try { //I try catch servono per gestire le throws
 			//getIstance() ritorna la istanza statica
 			//L'istanza statica è stata creata appena partito il programma
+			//Il try serve anche nel caso in cui la matricola è nulla (quando ci si logga come admin)
 			dipendente = NotaSpesaService.getInstance().findDipendenteByMatricola(matricola);
 		} catch (EntityNotFoundException e) {
 			System.out.println(e.getMessage());
+			//Tutto quello scritto sotto return non viene eseguito, quindi se c'è un errore, uso return per uscire dalla funzione
 			return;
 		}
 		notaSpesa.setDipendente(dipendente);
@@ -126,8 +132,10 @@ public class MainNoteSpese {
 			dettaglio.setImporto(Double.parseDouble(scanner.nextLine()));
 						
 			System.out.print("Scegli se proseguire [Y, N]: ");
+			//il risultato di questa ↓ espressione è un boolean
 			termina = "n".equalsIgnoreCase(scanner.nextLine()); 
 			
+			//notaSpesa.getVociSpesa prende la list (dell'istanza notaSpesa); .add(dettaglio) → aggiunge una voce spesa alla list
 			notaSpesa.getVociSpesa().add(dettaglio);
 			
 		} while (!termina);
@@ -145,7 +153,7 @@ public class MainNoteSpese {
 		String id = scanner.nextLine();
 		
 		try {
-			
+			//Delete(id,matricola) → viene passata anche la matricola per controllare che la nota spesa sia associata a tale matricola
 			NotaSpesaService.getInstance().delete(Integer.parseInt(id), matricola);
 			System.out.println("Nota spesa eliminata!");
 			
@@ -264,7 +272,7 @@ public class MainNoteSpese {
 	}
 
 	private static String richiediMatricola(Scanner scanner) {
-		
+		//Questa funzione serve per richiedere la matricola all'utente
 		String matricola = null;
 		
 		boolean termina = false;
@@ -274,13 +282,16 @@ public class MainNoteSpese {
 			System.out.println("D) Dipendente");
 			System.out.println("A) Amministratore");
 			System.out.print("Scegli come entrare: ");
+			//Faccio scegliere il ruolo all'utente
 			String ruolo = scanner.nextLine();
 			if ("D".equalsIgnoreCase(ruolo)) {
 				
+				//Se l'utente sceglie D, basta inserire la matricola senza password
 				System.out.print("Inserisci matricola: ");
 				matricola = scanner.nextLine();
+				//Questo try non servirebbe perchè questa funzione ritorna una matricola o null
 				try {
-					
+					//Cerco se esiste la matricola nel database e scrivo benvenuto
 					Dipendente dipendente = AuthService.getInstance().loginDipendente(matricola);
 					System.out.println("Benvenuto " + dipendente.getCognome() + " " + dipendente.getNome());
 					termina = true;
@@ -292,6 +303,7 @@ public class MainNoteSpese {
 				
 			} else if ("A".equalsIgnoreCase(ruolo)) {
 				
+				//Se l'utente vuole effettuare il login come admin, deve inserire la password
 				System.out.print("Inserisci password: ");
 				String password = scanner.nextLine();
 				if (AuthService.getInstance().loginAdmin(password)) {
@@ -300,6 +312,7 @@ public class MainNoteSpese {
 				}
 				
 			}
+		//termina diventa true solo se è stato scritto o D o A
 		} while (!termina);
 		
 		return matricola;

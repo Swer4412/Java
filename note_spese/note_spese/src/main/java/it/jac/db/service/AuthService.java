@@ -27,6 +27,7 @@ public class AuthService {
 		//Questa è una funzione ad alto livello per il login
 		Dipendente result = null;
 		
+		//Cerco il dipendente in base alla matricola che mi ha passato
 		result = this.dipendenteDao.findByMatricola(matricola);
 		if (result == null) {
 			log.warn("Matricola {} non registrata!", matricola);
@@ -38,6 +39,7 @@ public class AuthService {
 	
 	public boolean loginAdmin(String password) {
 		
+		//Gestione semplificata: basta che la password sia admin123 per accedere come admin
 		return "admin123".equals(password);
 		
 	}
