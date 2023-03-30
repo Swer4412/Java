@@ -95,7 +95,9 @@ private static Logger log = LogManager.getLogger(CategoriaDao.class);
 				result = new NotaSpesa(id, cod, meseRif, importoTotale, stato, utenteCreazione, dataCreazione, utenteModifica,
 						dataModifica);
 				
+				//Dell'entità creata, imposta il dipendete
 				result.setDipendente(this.dipendenteDao.findById(rs.getInt("id_dipendente")));
+				//Dell'entità creata, prendine la lista e aggiungi tutto il risultato del findByNota
 				result.getVociSpesa().addAll(this.voceSpesaDao.findByNota(result));
 
 				

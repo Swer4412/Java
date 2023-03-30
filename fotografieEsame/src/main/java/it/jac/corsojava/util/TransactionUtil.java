@@ -1,14 +1,12 @@
-package it.jac.db.util;
+package it.jac.corsojava.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import it.jac.db.dao.BaseDao;
+import it.jac.corsojava.dao.BaseDao;
 
 public class TransactionUtil {
 	
-	//é una variabile che sa parlare con il thread corrente
-	//ThreadLocal permette di creare variabili locali ad un thread
 	private static ThreadLocal<Connection> currentConnection = new ThreadLocal<>();
 	//Creo un threadlocal di tipo connessione
 	

@@ -122,6 +122,8 @@ public class NotaSpesaService {
 	}
 
 	private void update(NotaSpesa persistedEntity, NotaSpesa notaSpesa) throws EntityNotFoundException {
+		//Persisted entity è l'entità vecchia, notaspesa è l'entità nuova
+		
 		
 		log.info("Modifica NotaSpesa [id={}]", persistedEntity.getId());
 		
