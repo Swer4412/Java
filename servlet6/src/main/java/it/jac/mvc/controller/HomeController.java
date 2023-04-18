@@ -27,7 +27,6 @@ public class HomeController extends HttpServlet {
 
 		log.info("Ricevuta richiesta doGet");
 		
-		response.getWriter().write("<h1>Risposta del server alla GET</h1>");
 	}
 
 	@Override

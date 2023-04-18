@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous"/>
+    <title>Televideo</title>
+</head>
+<body>
+    <div class="container d-flex justify-content-center">
+        <div class="row col-8 my-4">
+            <input id="input" type="text" class="form-control" disabled>
+            <class="container">
+                    <div class="row m-1 mt-4">
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(7)">7</button>
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(8)">8</button>
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(9)">9</button>
+                    </div>
+                    <div class="row m-1">
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(4)">4</button>
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(5)">5</button>
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(6)">6</button>
+                    </div>
+                    <div class="row m-1">
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(1)">1</button>
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(2)">2</button>
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(3)">3</button>
+                    </div>
+                    <div class="row m-1">
+                        <button class="btn btn-secondary btn-lg col" onclick="del()">◄</button>
+                        <button class="btn btn-secondary btn-lg col" onclick="addNum(0)">0</button>
+                        <button class="btn btn-secondary btn-lg col" onclick="showTelevideo()">OK</button>
+                    </div>
+            </div>
+        </div>
+        <div id="televideo" class="d-flex justify-content-center">
+            <!--Qui va l'immagine-->
+        </div>
+    </div>
+    <script>
+        const NUMERI=[0,1,2,3,4,5,6,7,8,9]
+        let reset=false
+        //Prendo la input
+        const input = document.getElementById("input")
+
+        //Gestisco input tasiera
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" ) {
+                showTelevideo()
+            } else {
+                addNum(event.key)
+            }
+        })
+
+        //Funzione che aggiunge a input il numero cliccato
+        function addNum(num){
+            //Controllo se è stato gia visualizzato il televideo
+            if (reset) {
+                reset= !reset
+                input.value=""
+            }
+
+            if (num in NUMERI)
+            input.value+=num
+        }
+
+        function del(){ 
+            const val = input.value
+            input.value = val.substring(0,input.length-1) //Mette come valore la substring da 0 a l'ultimo carattere-1 
+        }
+
+        function showTelevideo() {
+            //Prendo l'elemento padre
+            const container = document.getElementById("televideo")
+
+            //Creo l'elemento dell'immagine
+            const val = input.value
+            const link = "https://www.televideo.rai.it/televideo/pub/tt4web/Nazionale/16_9_page-"+val+".png"
+            const immagine = '<img src="'+link+'" alt="canale inesistente" />'
+            
+            //Metto l'immagine nel contenitore
+            container.innerHTML=immagine
+
+            reset=true
+        }
+        
+
+    </script>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+</html>
