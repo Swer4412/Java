@@ -33,7 +33,6 @@ public class AuthFilter extends HttpFilter {
 			//Qua non faccio redirect perchè l'url richiesto è gia /login
 			//Una volta finiti i filtri, viene eseguita la servlet in base a quale url è chiamato
 			return;
-			//Return serve per evitare che vada avanti con il procedimento
 		}
 		
 		//Guardo se nella sessione è presente l'username
@@ -43,7 +42,7 @@ public class AuthFilter extends HttpFilter {
 			res.sendRedirect("login");
 			return;
 		}
-		//Senza dofilter, non si sblocca più
+		//Senza dofilter, non si sblocca più, boh
 		chain.doFilter(req, res);
 	}
 }

@@ -25,13 +25,9 @@ public class TableController extends HttpServlet {
 		log.info("ricevuta richiesta doGet");
 		
 		//Creo la lista
-		List<User> list = new ArrayList<>();
+		List<Canzone> list = new ArrayList<>();
 		
-		//Riempio la lista
-		//Utilizzo dati demo
-		for(int i=0; i < 25; i++) {
-			list.add(new User(i, "nome" + i, "cognome" + i));
-		}
+		Arraylist list = dao.get()
 		
 		//Metto la lista nella request
 		request.setAttribute("data", list);
