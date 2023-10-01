@@ -10,8 +10,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <title>Calendario</title>
 </head>
-<body class="bg-gray-700 text-white font-sans">
-	<main class="flex justify-center items-center">
+<body class="bg-gray-700 text-white font-mono ">
+	<main class="flex justify-center items-center mt-4">
 		<table class="border-2 border- box-shadow">
 			<tr class="border text-3xl">
 				<th class="px-2">Lunedì</th>
@@ -22,9 +22,19 @@
 				<th class="px-2">Sabato</th>
 				<th class="px-2">Domenica</th>
 			</tr>
-			<tr class="border text-xl text-center">
+			<tr class="border text-xl text-center hover:cursor-pointer">
+			
+			<c:set var="counter" value="0" scope="page"/>
 			<c:forEach items ="${daysList}" var="day">
-				<td class="p-2">${day}</td>
+			
+				<td class="pb-16 px-8 pt-2 whitespace-nowrap border bg-gray-800 hover:bg-opacity-50">${day}</td>
+				<c:set var="counter" value="${counter + 1}"/>
+				
+				<c:if test="${counter % 7 == 0}">
+					</tr> 
+					<tr class="border text-xl text-center hover:cursor-pointer"> 
+				</c:if>
+				
 			</c:forEach>
 			</tr>
 		</table>

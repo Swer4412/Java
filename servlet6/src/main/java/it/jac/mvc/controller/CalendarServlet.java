@@ -38,12 +38,12 @@ public class CalendarServlet extends HttpServlet {
 		
 		
 		//CONTROLLO NULLI E SE è UN NUMERO PULITO
-		if (!month.matches("[0-9]+")) { //non so se ha senso ma sembra funzionare
+		if (month == null || !month.matches("[0-9]+")) { 
 			monthNum = LocalDate.now().getMonthValue();
 		} else {
 			monthNum = Integer.parseInt(month);
 		}
-		if (!month.matches("[0-9]+")) {
+		if (year == null || !year.matches("[0-9]+")) {
 			yearNum = LocalDate.now().getYear();
 		} else {
 			yearNum = Integer.parseInt(year);
@@ -61,10 +61,8 @@ public class CalendarServlet extends HttpServlet {
 			firstCalendarDay = firstCalendarDay.minusDays(1);
 		}
 		
-		//Prendo la prima data del mese in base a cosa ho ottenuto dall'url
 		LocalDate lastCalendarDay = firstMonthDay.with(TemporalAdjusters.lastDayOfMonth());
 		
-		//Prendo la prima data del calendario
 		while (lastCalendarDay.getDayOfWeek() != DayOfWeek.SUNDAY) {
 			lastCalendarDay = lastCalendarDay.plusDays(1);
 		}
@@ -72,11 +70,10 @@ public class CalendarServlet extends HttpServlet {
 		//Riempio la lista dei giorni che faranno il calendario
 		long daysNum = ChronoUnit.DAYS.between(firstCalendarDay, lastCalendarDay);
 		
-		for (int i = 0; i < daysNum ;i++) {
+		for (int i = 0; i <= daysNum ;i++) {
 			daysList.add(firstCalendarDay);
 			firstCalendarDay = firstCalendarDay.plusDays(1);
 		}
-		
 		
 		req.setAttribute("daysList", daysList);
 		
