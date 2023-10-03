@@ -3,6 +3,7 @@ package it.jac.mvc.controller;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -49,10 +50,24 @@ public class CalendarServlet extends HttpServlet {
 			yearNum = Integer.parseInt(year);
 		}
 		
+		//CONTROLLO NUMERI ILLEGALI
+		if (monthNum > 12) {
+			monthNum = 1;
+			yearNum = yearNum + 1;
+		}
+		if (monthNum < 1) {
+			monthNum = 12;
+			yearNum = yearNum - 1;
+		}
 		
 		//PRENDO PRIMO E ULTIMO GIORNO DEL CALENDARIO
 		//Prendo la prima data del mese in base a cosa ho ottenuto dall'url
 		LocalDate firstMonthDay = LocalDate.of(yearNum, monthNum, 1);
+		
+		//Prendo valori per interfaccia
+		Month currentMonth = firstMonthDay.getMonth();
+		Month previousMonth = firstMonthDay.minusMonths(1).getMonth();
+		Month nextMonth = firstMonthDay.plusMonths(1).getMonth();
 		
 		LocalDate firstCalendarDay = firstMonthDay; //Creo una copia
 		
@@ -67,7 +82,7 @@ public class CalendarServlet extends HttpServlet {
 			lastCalendarDay = lastCalendarDay.plusDays(1);
 		}
 		
-		//Riempio la lista dei giorni che faranno il calendario
+		//RIEMPIO LA LISTA CON I GIORNI DEL CALENDARIO
 		long daysNum = ChronoUnit.DAYS.between(firstCalendarDay, lastCalendarDay);
 		
 		for (int i = 0; i <= daysNum ;i++) {
@@ -76,6 +91,11 @@ public class CalendarServlet extends HttpServlet {
 		}
 		
 		req.setAttribute("daysList", daysList);
+		req.setAttribute("yearNum", yearNum);
+		req.setAttribute("monthNum", monthNum);
+		req.setAttribute("currentMonth", currentMonth);
+		req.setAttribute("previusMonth", previousMonth);
+		req.setAttribute("nextMonth", nextMonth);
 		
 		req.getRequestDispatcher("calendar.jsp").forward(req, resp);
 	}
