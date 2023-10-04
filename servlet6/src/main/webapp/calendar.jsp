@@ -16,11 +16,14 @@
 		<div class="m-3 flex justify-between w-full">
 			<form>
 				<input type="hidden" name="month" value="${monthNum - 1}">
-				<button type="submit" class="border-white rounded bg-blue-700 p-2 mx-4">MESE -</button>
+				<button type="submit" class="border-white rounded bg-blue-700 p-2 mx-4">${previusMonth}</button>
 			</form>
+			<div class="text-4xl font-bold">
+				${currentMonth}
+			</div>
 			<form>
 				<input type="hidden" name="month" value="${monthNum + 1}">
-				<button type="submit" class="border-white rounded bg-blue-700 p-2 mx-4">MESE +</button>
+				<button type="submit" class="border-white rounded bg-blue-700 p-2 mx-4">${nextMonth}</button>
 			</form>
 		</div>
 
@@ -39,8 +42,7 @@
 				<c:set var="counter" value="0" scope="page" />
 				<c:forEach items="${daysList}" var="day">
 
-					<td
-						class="pb-16 px-8 pt-2 whitespace-nowrap border bg-gray-800 hover:bg-opacity-50">${day}</td>
+					<td class="pb-16 px-8 pt-2 whitespace-nowrap border bg-gray-800 hover:bg-opacity-50">${day}</td>
 					<c:set var="counter" value="${counter + 1}" />
 
 					<c:if test="${counter % 7 == 0}">
