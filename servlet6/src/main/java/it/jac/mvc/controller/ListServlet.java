@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/list") 
+//@WebServlet("/list") 
 public class ListServlet extends HttpServlet { 
 	
 	private Logger log = LogManager.getLogger(ListServlet.class);
