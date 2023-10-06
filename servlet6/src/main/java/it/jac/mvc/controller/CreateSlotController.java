@@ -1,7 +1,9 @@
 package it.jac.mvc.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,10 +28,34 @@ public class CreateSlotController extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		//PRENDO PARAMETRI
+		int id = 0;
+		boolean update = false;
+		
+		try { //Se mi è stato passato devo aggiornare questo id
+			id = Integer.parseInt(req.getParameter("id"));
+			update = true;
+		} catch (Exception e) { //Altrimenti lo genero io
+			id = (int)Math.random() * 100000;
+		}
+		
+		//converto String a LocalDate
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate date = LocalDate.parse(req.getParameter("date"), formatter);
+		
+		LocalTime start = LocalTime.parse(req.getParameter("start"));
+		LocalTime end = LocalTime.parse(req.getParameter("end"));
+		
+		//CREO OGGETTO SLOT
+		Slot slot = new Slot(id, date, start, end, false);
+		
 		//Prendo la lista
 		List<Slot> list = (List<Slot>)req.getSession().getAttribute("session.list.slot");
 		
-		System.out.println(list);
+		//
+		
+		
 		
 		
 	}

@@ -32,24 +32,16 @@
 		<form action="slot-create" method="post">
 			<div class="row display-block">
 				<div class="col">
-					<label for="id">ID</label>
-					<input id="id" name="id" value="${slot.id}">
-				</div>
-				<div class="col">
 					<label for="date">Data</label>
-					<input id="date" name="date" value="${slot.date}">
+					<input id="date" type="date" name="date" value="${slot.date}">
 				</div>
 				<div class="col">
 					<label for="start">Ora inizio</label>
-					<input id="start" name="start" value="${slot.startTime}">
+					<input id="start" type="time" min="08:00" max="20:00" name="start" value="${slot.startTime}">
 				</div>	
 				<div class="col">
 					<label for="end">Ora fine</label>
-					<input id="end" name="end" value="${slot.endTime}">
-				</div>
-				<div class="col">
-					<label for="prenotato">Prenotato</label>
-					<input id="prenotato" name="prenotato" value="${slot.prenotato}">
+					<input id="end" type="time" min="08:00" max="20:00" name="end" value="${slot.endTime}">
 				</div>
 			</div>
 		</form>

@@ -11,6 +11,15 @@ public class Slot {
 	private LocalTime endTime;
 	private boolean prenotato;
 	
+	public Slot(int id, LocalDate date, LocalTime startTime, LocalTime endTime, boolean prenotato) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.prenotato = prenotato;
+	}
+	
 	public int getId() {
 		return id;
 	}
