@@ -44,6 +44,7 @@
 					<input id="end" type="time" min="08:00" max="20:00" name="end" value="${slot.endTime}">
 				</div>
 			</div>
+			<input type="submit"/>
 		</form>
 
 

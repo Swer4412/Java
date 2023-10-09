@@ -34,6 +34,24 @@
 				<a class="btn btn-primary float-start" href="slot-create">Crea Slot</a>
 			</div>
 		</div>
+		
+		<div class="row">
+			<div class="col text-center">
+				ID
+			</div>
+			<div class="col text-center">
+				DATA
+			</div>
+			<div class="col text-center">
+				ORA INIZIO
+			</div>
+			<div class="col text-center">
+				ORA FINE
+			</div>
+			<div class="col text-center">
+				PRENOTATO
+			</div>
+		</div>
 	
 		<c:forEach items="${list}" var="slot">
 		<div class="row">

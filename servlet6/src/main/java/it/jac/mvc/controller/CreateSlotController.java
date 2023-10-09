@@ -41,7 +41,7 @@ public class CreateSlotController extends HttpServlet {
 		}
 		
 		//converto String a LocalDate
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate date = LocalDate.parse(req.getParameter("date"), formatter);
 		
 		LocalTime start = LocalTime.parse(req.getParameter("start"));
@@ -53,9 +53,20 @@ public class CreateSlotController extends HttpServlet {
 		//Prendo la lista
 		List<Slot> list = (List<Slot>)req.getSession().getAttribute("session.list.slot");
 		
-		//
+		//Se l'id è stato passato come parametro
+		if (update) {
+			//Per ogni elemento dentro la lista 
+			for (Slot s : list) {
+				//Se l'id dentro la lista è uguale all'id passato
+				if (s.getId() == id) {
+					list.set(list.indexOf(s), slot);
+				}
+			}
+		} else {
+			list.add(slot);
+		}
 		
-		
+		resp.sendRedirect("list-slot");
 		
 		
 	}
