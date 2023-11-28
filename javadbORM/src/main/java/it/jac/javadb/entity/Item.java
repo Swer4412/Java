@@ -2,19 +2,25 @@ package it.jac.javadb.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+//Questo file è stato indicato in hibernate.cfg.xml come file per il mapping, è per questo che funziona
 
 @Entity //Questo dice che è una classe che serve per la creazione di una tabella nel database
 @Table(name = "item") //Serve per specificare il nome della tabella
 public class Item {
 
-	@Id //Indica che questa colonna è la primary key
+	@Id //Indica che questa colonna è la primary key, è obbligatorio SEMPRE
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Dice che questo id è auto-generato
 	@Column(name = "id")//Descrive le caratteristiche della colonna
 	private int id;
@@ -55,9 +61,10 @@ public class Item {
 //	da usare in associazioni uni-direzionali
 //	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //	@JoinColumn(name = "id_item")	
-
-//	@OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
-//	private Set<ItemFeature> featureList = new HashSet<>();
+	
+	//fetch = FetchType.EAGER --> Non prende solo item ma prende anche tutti gli altri elementi a cui è collegato
+	@OneToMany(mappedBy = "item", fetch = FetchType.EAGER) 
+	private Set<ItemFeature> featureList = new HashSet<>();
 	
 	public int getId() {
 		return id;
@@ -147,12 +154,12 @@ public class Item {
 		this.updateTime = updateTime;
 	}
 
-//	public Set<ItemFeature> getFeatureList() {
-//		return featureList;
-//	}
-//
-//	public void setFeatureList(Set<ItemFeature> featureList) {
-//		this.featureList = featureList;
-//	}
+	public Set<ItemFeature> getFeatureList() {
+		return featureList;
+	}
+
+	public void setFeatureList(Set<ItemFeature> featureList) {
+		this.featureList = featureList;
+	}
 	
 }

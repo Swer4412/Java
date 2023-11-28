@@ -15,7 +15,8 @@ public class HibernateUtil {
 	private static final Logger log = LogManager.getLogger(HibernateUtil.class);
 
 	private static StandardServiceRegistry registry;
-	private static SessionFactory sessionFactory;
+	private static SessionFactory sessionFactory; //Serve per creare nuove sessioni
+	//Hibernate con sessionfactory crea connection, preparedStatement, ResultSet
 
 	public static SessionFactory getSessionFactory() {
 

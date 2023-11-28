@@ -19,8 +19,9 @@
 		<!-- Scelta della modalita' di aggiornamento dello schema -->
 		<property name="hbm2ddl.auto">update</property>
 
-		<!-- mapping entita' -->
+		<!-- mapping entita', conoscendo le entita, può aggiornare le tabelle -->
 		<mapping class="it.jac.javadb.entity.Item" />
+		<mapping class="it.jac.javadb.entity.ItemFeature" />
 		
 	</session-factory>
 </hibernate-configuration>

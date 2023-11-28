@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import it.jac.javadb.dao.ItemDao;
 import it.jac.javadb.entity.Item;
+import it.jac.javadb.entity.ItemFeature;
 
 public class TestItemCRUD {
 
@@ -113,28 +114,37 @@ public class TestItemCRUD {
 	}
 	
 	
-//	@Test
-//	public void testAddFeature() {
-//		
-//		Item item = this.dao.findItemById(1);
-//		
-//		ItemFeature feature1 = new ItemFeature();
-//		feature1.setFeatureKey("colore");
-//		feature1.setFeatureValue("rosso");
-//		feature1.setCreationTime(LocalDateTime.now());
-//		feature1.setCreationUser("test-join");
-//		feature1.setItem(item);
-//		
-//		ItemFeature feature2 = new ItemFeature();
-//		feature2.setFeatureKey("larghezza");
-//		feature2.setFeatureValue("142cm");
-//		feature2.setCreationTime(LocalDateTime.now());
-//		feature2.setCreationUser("test-join");
-//		feature2.setItem(item);
-//		
-//		this.dao.saveFeature(feature1);
-//		this.dao.saveFeature(feature2);
-//		
-//	}
+	@Test
+	public void testAddFeature() {
+		
+		Item item = this.dao.findItemById(2);
+		
+		ItemFeature feature1 = new ItemFeature();
+		feature1.setFeatureKey("colore");
+		feature1.setFeatureValue("rosso");
+		feature1.setCreationTime(LocalDateTime.now());
+		feature1.setCreationUser("test-join");
+		feature1.setItem(item);
+		
+		ItemFeature feature2 = new ItemFeature();
+		feature2.setFeatureKey("larghezza");
+		feature2.setFeatureValue("142cm");
+		feature2.setCreationTime(LocalDateTime.now());
+		feature2.setCreationUser("test-join");
+		feature2.setItem(item);
+		
+		this.dao.saveFeature(feature1);
+		this.dao.saveFeature(feature2);
+		
+	}
+	
+	@Test
+	public void testReadFeature() {
+		
+		Item item = this.dao.findItemById(2);
+		
+		assertTrue(item.getFeatureList().size() > 0);
+	}
+	
 	
 }
