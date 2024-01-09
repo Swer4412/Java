@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>Dettaglio Slot</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary rounded">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="calendar"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="list-slot"
+                  >Gestione Slot</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <div class="container">
+            <div class="mb-3">
+                <label for="itemid" class="form-label"> ID </label>
+                <input id="itemid" name="itemid" type="text" class="form-control"/>
+              </div>
+            <div class="mb-3">
+              <label for="code" class="form-label"> Code </label>
+              <input id="code" name="code" type="text" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label"> Descrizione </label>
+              <input
+                id="description"
+                name="description"
+                type="text"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="long_description" class="form-label">
+                Descrizione Estesa
+              </label>
+              <input
+                id="long_description"
+                name="longDescription"
+                type="text"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="updatetime" class="form-label"> Update time </label>
+              <input
+                id="updatetime"
+                readonly
+                type="text"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-3">
+              <button type="button" class="btn btn-primary">Modifica</button>
+              <button type="button" class="btn btn-primary" onclick="carica()">Carica</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+
+    
+
+    const carica = () => {
+        
+        //Prendo il valore dentro l'input
+        const {value} = document.getElementById("itemid")
+
+        //Creo l'url con la richiesta
+        const requestUrl = "http://localhost:8080/edit-item/api/item/" + value
+
+        //Faccio la richiesta all'api
+        fetch(requestUrl)
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error(res.status)
+            }
+            return res.json()
+        })
+        .then((data) => {
+            console.log(data)
+            document.getElementById("itemid").value = data.id
+            document.getElementById("code").value = data.code
+            document.getElementById("description").value = data.description
+            document.getElementById("long_description").value = data.longDescription
+            document.getElementById("updateTime").value = data.updateTime.map((item) => (item))
+
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+
+    }
+
+  </script>
+</html>
