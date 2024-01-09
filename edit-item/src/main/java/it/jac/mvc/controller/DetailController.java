@@ -22,7 +22,6 @@ public class DetailController extends HttpServlet {
 		String parId = req.getParameter("id");
 		
 		if (parId == null) {
-
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
@@ -75,14 +74,21 @@ public class DetailController extends HttpServlet {
 		
 		//Controllo se nel database esiste o no l'item
 		Item item = (Item) req.getSession().getAttribute("item");
-		//Confronta tra item della sessione e item del database
 		if (item == null) {
 			System.out.println("Item non trovato");
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
+		//Confronta tra item della sessione e item del database 
+//		Item itemDb = this.service.findItemById(id);
+//		if (!item.equals(itemDb)) {
+//			System.out.println("Item nella sessione e item nel database sono diversi");
+//			System.out.println(item.getCode() + itemDb.getCode());
+//			resp.sendRedirect("detail?id=" + id);
+//			return;
+//		}
 		
-//		Leggere parametro code, descirption, longDescription
+//		Leggere parametro code, description, longDescription
 		String code = req.getParameter("code");
 		String description = req.getParameter("description");
 		String longDescription = req.getParameter("longDescription");
