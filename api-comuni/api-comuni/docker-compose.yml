@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  service-mysql:
+    image: "mysql:8.0"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+      - MYSQL_DATABASE=istat
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3316:3306"
+    networks:
+      - network1
+  api:
+    build: .
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+    ports:
+      - "8080:8080"
+    networks:
+      - network1
+    depends_on:
+      - service-mysql
+volumes:
+  mysql-data:
+  
+networks:
+  network1:
+    name: net1
+    external: true
