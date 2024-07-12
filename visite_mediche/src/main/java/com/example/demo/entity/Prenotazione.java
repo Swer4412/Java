@@ -18,7 +18,7 @@ public class Prenotazione {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "id", nullable = false)
-		private int id;
+		private Long id;
 		
 		@Column(name = "data_visita", nullable = false)
 		private LocalDateTime dataVisita;
@@ -32,19 +32,23 @@ public class Prenotazione {
 		@Column(name = "codice_conferma", nullable = false)
 		private String codiceConferma;
 		
+		//Many to one dice che ci sono molte prenotazioni per ogni utente
+		//JoinColumn è la Column che viene utilizzata per salvarsi l'id dell utente
 		@ManyToOne
-		@JoinColumn(name = "id_utente")
+		@JoinColumn(name = "utente_id", insertable = false, updatable = false) 
 		private Utente utente;
 		
+		//Many to one dice che ci sono molte prenotazioni per ogni medico
+		//JoinColumn è la Column che viene utilizzata per salvarsi l'id del medico
 		@ManyToOne
-		@JoinColumn(name = "id_medico")
+		@JoinColumn(name = "medico_id")
 		private Medico medico;
 
-		public int getId() {
+		public Long getId() {
 			return id;
 		}
 
-		public void setId(int id) {
+		public void setId(Long id) {
 			this.id = id;
 		}
 

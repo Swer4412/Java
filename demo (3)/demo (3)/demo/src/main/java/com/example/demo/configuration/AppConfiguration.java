@@ -20,16 +20,13 @@ public class AppConfiguration {
 
 	@Bean
 	SecurityFilterChain secFilterChain(HttpSecurity http, CorsConfigurationSource source) throws Exception {
-		http
-		.csrf(csrf -> csrf.disable())
-		.httpBasic(httpBasic -> httpBasic.disable())
-		.sessionManagement(sessionConfig -> sessionConfig.disable())
-		.cors(cors -> {
-			cors.configurationSource(apiConfigurationSource());
-		});
-	    return http.build();
+		http.csrf(csrf -> csrf.disable()).httpBasic(httpBasic -> httpBasic.disable())
+				.sessionManagement(sessionConfig -> sessionConfig.disable()).cors(cors -> {
+					cors.configurationSource(apiConfigurationSource());
+				});
+		return http.build();
 	}
-	
+
 	CorsConfigurationSource apiConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 //		abilito tutti i domini ad eseguire chiamate verso il server
@@ -42,5 +39,5 @@ public class AppConfiguration {
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-	
+
 }

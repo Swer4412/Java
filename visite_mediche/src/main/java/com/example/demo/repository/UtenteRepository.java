@@ -7,6 +7,7 @@ import com.example.demo.entity.Utente;
 
 
 @Repository
-public interface UtenteRepository extends JpaRepository<Utente, Integer> {
+public interface UtenteRepository extends JpaRepository<Utente, Long> {
 
+	Utente findByEmail(String email);
 }

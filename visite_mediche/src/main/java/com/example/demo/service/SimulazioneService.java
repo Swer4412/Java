@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Medico;
@@ -22,11 +22,11 @@ public class SimulazioneService {
 	PrenotazioneRepository prenotazioneRepository;
 	private static final String CHARACTERS = "01234CGMRJFFALDGGD56789";
     private static final SecureRandom random = new SecureRandom();
+    
 	public SimulazioneService(UtenteRepository utenteRepository, MedicoRepository medicoRepository, PrenotazioneRepository prenotazioneRepository) {
 		this.utenteRepository = utenteRepository;
 		this.medicoRepository = medicoRepository;
 		this.prenotazioneRepository = prenotazioneRepository;
-				
 	}
 	
 	public List<Prenotazione> findAllPrenotazioni(){
@@ -45,12 +45,16 @@ public class SimulazioneService {
 		return prenotazione.getCodiceConferma();
 	}
 	
-	public Optional<Utente> findUserById(int id) {
-		return this.utenteRepository.findById(id);
+	public Utente findUserById(Long id) {
+		return this.utenteRepository.findById(id).orElse(null);
 	}
 	
-	public ArrayList<Prenotazione> findPrenotazioniByIdUtente(int id) {
-		return this.prenotazioneRepository.findAllById(id);
+	public List<Prenotazione> findPrenotazioniByIdUtente(Long id) {
+		return this.prenotazioneRepository.findByUtenteId(id);
+	}
+
+	public Utente findUserByEmail(String email) {
+		return this.utenteRepository.findByEmail(email);
 	}
 
     public String generateRandomString() {
@@ -61,6 +65,7 @@ public class SimulazioneService {
         }
         return sb.toString();
     }
+
 
 	
 	

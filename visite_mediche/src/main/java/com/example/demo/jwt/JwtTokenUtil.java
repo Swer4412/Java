@@ -21,13 +21,16 @@ public class JwtTokenUtil {
 	
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 	
+	//@Value va a prendere il valore della proprietá jwt.secret contenuta dentro application.properties
 	@Value("${jwt.secret}")
 	private String secret;
 
 //generate token for user
-	public String generateToken(int id) {
+	public String generateToken(String email, String scopes) {
 		
-		return doGenerateToken(id);
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("scope", scopes.replaceAll(";", " "));
+		return doGenerateToken(claims, email);
 	}
 
 // for retrieveing any information from token we will need the secret key
@@ -41,13 +44,15 @@ public class JwtTokenUtil {
 //2. Sign the JWT using the HS512 algorithm and secret key.
 //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
 //   compaction of the JWT to a URL-safe string 
-	private String doGenerateToken(int id) {
+	private String doGenerateToken(Map<String, Object> claims, String subject) {
 		
 		return Jwts.builder()
 				.id(UUID.randomUUID().toString())
+				.subject(subject)
 				.issuer("api-comuni")
 				.issuedAt(new Date(System.currentTimeMillis()))
 				.setAudience("http://localhost:8080")
+				.claims(claims)
 				.expiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
 				.signWith(Keys.hmacShaKeyFor(this.secret.getBytes()))
 			.compact();

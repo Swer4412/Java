@@ -1,10 +1,13 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,7 +17,7 @@ public class Utente {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "id", nullable = false)
-		private int id;
+		private Long id;
 		
 		@Column(name = "nome", nullable = false)
 		private String nome;
@@ -22,8 +25,8 @@ public class Utente {
 		@Column(name = "cognome", nullable = false)
 		private String cognome;
 		
-		@Column(name = "email", nullable = false)
-		private String email;
+		@Column(unique = true, nullable = false)
+	    private String email;
 		
 		@Column(name = "codice_fiscale", nullable = false)
 		private double codiceFiscale;
@@ -31,11 +34,16 @@ public class Utente {
 		@Column(name = "data_nascita", nullable = false)
 		private String dataNascita;
 		
-		public int getId() {
+		//One to many vuol dire che per ogni utente ci sono 0 o piú prenotazioni
+		//Mapped specifica il nome del campo nell'altra entità (Prenotazione) che gestisce questa relazione
+		@OneToMany(mappedBy = "utente") 
+	    private List<Prenotazione> prenotazioni;
+		
+		public Long getId() {
 			return id;
 		}
 
-		public void setId(int id) {
+		public void setId(Long id) {
 			this.id = id;
 		}
 

@@ -22,8 +22,8 @@ public class SimulazioneController {
 	SimulazioneService service;
 	
 	//Costruttore per prendere il service
-	public SimulazioneController(SimulazioneService Service) {
-		this.service = Service;
+	public SimulazioneController(SimulazioneService service) {
+		this.service = service;
 	}
 	
 	@PostMapping("/prenota")
@@ -35,9 +35,9 @@ public class SimulazioneController {
 	}
 	
 	@GetMapping("/prenotazioni")
-	public List<Prenotazione> findPrenotazioniByIdUtente(int id){
+	public List<Prenotazione> findPrenotazioniByIdUtente(Long id){
 		
-		return this.service.findPrenotazioniByIdUtente(int id);
+		return this.service.findPrenotazioniByIdUtente(id);
 	}
 	
 	@GetMapping("/medici")

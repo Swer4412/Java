@@ -23,6 +23,7 @@ public class LoginController {
 
 	private static Logger log = LogManager.getLogger(LoginController.class);
 	
+	//Inietto le varie dipendenze
 	@Autowired
 	private JwtTokenUtil jwtUtil;
 	
@@ -37,20 +38,16 @@ public class LoginController {
 		
 		log.debug("richiamato metodo generazione token");
 		
-		Utente utente = this.service.findUserById(data.getId());
+		//Trovo l'utente in base all mail passata nel body
+		Utente utente = this.service.findUserByEmail(data.getEmail());
 		
-//		check password
-		if (!this.pwdEncoder.matches(data.getPassword(), utente.getId())) {
+		//Guardo se la password passata nel corpo matcha la mail salvata per questa email
+		if (!this.pwdEncoder.matches(data.getPassword(), utente.getEmail())) {
 			throw new BadCredentialsException("Password mismatch");
 		}
 		
-		return ResponseEntity.ok(this.jwtUtil.generateToken(data.getId());
-	}
-
-	@GetMapping("/test")
-	public ResponseEntity<String> test() {
-
-		return ResponseEntity.ok("ok");
+		//Se tutto va bene ritorno il token che poi si salverà in front end
+		return ResponseEntity.ok(this.jwtUtil.generateToken(data.getEmail(), "user"));
 	}
 	
 }

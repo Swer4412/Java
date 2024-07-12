@@ -7,6 +7,6 @@ import com.example.demo.entity.Medico;
 
 
 @Repository
-public interface MedicoRepository extends JpaRepository<Medico, Integer> {
+public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
 }
