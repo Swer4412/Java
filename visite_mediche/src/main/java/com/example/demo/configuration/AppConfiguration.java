@@ -19,26 +19,38 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class AppConfiguration {
 
 	@Bean
-    SecurityFilterChain secFilterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain secFilterChain(HttpSecurity http) throws Exception {
+	    http
+	        //Disabilita la protezione CSRF (Cross-Site Request Forgery) Utile per API REST stateless
+	        .csrf(csrf -> csrf.disable())
+	        
+	        //Disabilita l'autenticazione HTTP Basic dato cheStiamo usando JWT, quindi non abbiamo bisogno dell'autenticazione basic
+	        .httpBasic(httpBasic -> httpBasic.disable())
+	        
+	        //Disabilita la gestione della sessione, per API REST stateless, non abbiamo bisogno di mantenere sessioni lato server
+	        .sessionManagement(sessionConfig -> sessionConfig.disable())
+	        
+	        //Configura CORS (Cross-Origin Resource Sharing), permette di definire quali origini possono accedere alle API
+	        .cors(cors -> {
+	            cors.configurationSource(apiConfigurationSource());
+	        })
+	        
+	        //Configura le regole di autorizzazione per le richieste HTTP
+	        .authorizeHttpRequests(auth -> {
+	            auth
+	                //Permette l'accesso pubblico all'endpoint di login
+	                .requestMatchers("/api/v1/auth/login").permitAll()
+	                //Richiede l'autenticazione per tutte le altre richieste
+	                .anyRequest().authenticated();
+	        })
+	        
+	        //Configura il server come OAuth 2.0 Resource Server, usa JWT (JSON Web Tokens) per l'autenticazione
+	        .oauth2ResourceServer(oauth2ResourceServer ->
+	            oauth2ResourceServer.jwt(Customizer.withDefaults())
+	        );
 
-        http
-			.csrf(csrf -> csrf.disable())
-			.httpBasic(httpBasic -> httpBasic.disable())
-			.sessionManagement(sessionConfig -> sessionConfig.disable())
-			.cors(cors -> {
-				cors.configurationSource(apiConfigurationSource());
-			})
-            .authorizeHttpRequests(auth -> {
-            	auth
-            		.requestMatchers("/api/v1/auth/login").permitAll()
-                	.anyRequest().authenticated();
-            })
-            .oauth2ResourceServer(oauth2ResourceServer ->
-            	oauth2ResourceServer.jwt(Customizer.withDefaults()))
-			;
-        
-        return http.build();
-    }
+	    return http.build();
+	}
 
 	CorsConfigurationSource apiConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
@@ -55,7 +67,6 @@ public class AppConfiguration {
 	
 	@Bean
 	PasswordEncoder passEncoder() {
-		
 		return new BCryptPasswordEncoder();
 	}
 	

@@ -45,6 +45,10 @@ public class SimulazioneService {
 		return prenotazione.getCodiceConferma();
 	}
 	
+	public void saveUtente(Utente utente) {	
+		this.utenteRepository.save(utente);
+	}
+	
 	public Utente findUserById(Long id) {
 		return this.utenteRepository.findById(id).orElse(null);
 	}

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,13 +40,32 @@ public class LoginController {
 		//Trovo l'utente in base all mail passata nel body
 		Utente utente = this.service.findUserByEmail(data.getEmail());
 		
-		//Guardo se la password passata nel corpo matcha la mail salvata per questa email
-		if (!this.pwdEncoder.matches(data.getPassword(), utente.getEmail())) {
+		//Guardo se la password passata nel corpo matcha la password salvata nel database
+		if (!this.pwdEncoder.matches(data.getPassword(), utente.getPassword())) {
 			throw new BadCredentialsException("Password mismatch");
 		}
 		
-		//Se tutto va bene ritorno il token che poi si salverà in front end
-		return ResponseEntity.ok(this.jwtUtil.generateToken(data.getEmail(), "user"));
+		//Se tutto va bene genero il token
+		String token = this.jwtUtil.generateToken(data.getEmail(), "user");
+		
+		//Ritorno il token al chiamante
+		return ResponseEntity.ok(token);
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<String> register(@RequestBody Utente data) {
+		
+		log.debug("richiamato metodo registrazione utente");
+		
+		//TODO controllo che i campi siano riempiti
+		
+		data.setPassword(this.pwdEncoder.encode(data.getPassword()));
+		
+		//Salvo l'utente sul database
+		this.service.saveUtente(data);
+		
+		//Ritorno una risposta positiva al chiamante
+		return ResponseEntity.ok("");
 	}
 	
 }

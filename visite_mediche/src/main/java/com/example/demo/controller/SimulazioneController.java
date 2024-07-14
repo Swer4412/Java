@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Medico;
 import com.example.demo.entity.Prenotazione;
-import com.example.demo.repository.UtenteRepository;
 import com.example.demo.service.SimulazioneService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 //Il controller si occupa di gestire gli endpoint (definiti con @GetMapping), richiama 
 //il service per fare le richieste al database e ritorna quello che il service ritorna
@@ -27,7 +28,12 @@ public class SimulazioneController {
 	}
 	
 	@PostMapping("/prenota")
-	public String savePrenotazione(@RequestBody Prenotazione prenotazione){
+	public String savePrenotazione(@RequestBody Prenotazione prenotazione, HttpServletResponse response){
+		
+		if (prenotazione.getOraVisita() > 18 || prenotazione.getOraVisita() < 8) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return "";
+		}
 		
 		this.service.savePrenotazione(prenotazione);
 		

@@ -28,6 +28,9 @@ public class Utente {
 		@Column(unique = true, nullable = false)
 	    private String email;
 		
+		@Column(nullable = false)
+	    private String password;
+
 		@Column(name = "codice_fiscale", nullable = false)
 		private double codiceFiscale;
 		
@@ -87,5 +90,20 @@ public class Utente {
 			this.dataNascita = dataNascita;
 		}
 		
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public List<Prenotazione> getPrenotazioni() {
+			return prenotazioni;
+		}
+
+		public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+			this.prenotazioni = prenotazioni;
+		}
 		
 }
