@@ -20,8 +20,7 @@ public class CustomJwtDecoder implements JwtDecoder{
 
 	private static Logger log = LogManager.getLogger(CustomJwtDecoder.class);
 	
-	@Autowired
-	private JwtTokenUtil jwtUtil;
+	private final JwtTokenUtil jwtUtil = new JwtTokenUtil();
 	
 	@Override
 	public Jwt decode(String token) throws JwtException {

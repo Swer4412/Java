@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.lang.Arrays;
 import io.jsonwebtoken.security.Keys;
 
 @Component
