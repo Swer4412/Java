@@ -15,7 +15,7 @@ import com.example.demo.repository.PrenotazioneRepository;
 import com.example.demo.repository.UtenteRepository;
 
 @Service
-public class SimulazioneService {
+public class AppService {
 	
 	UtenteRepository utenteRepository;
 	MedicoRepository medicoRepository;
@@ -23,7 +23,7 @@ public class SimulazioneService {
 	private static final String CHARACTERS = "01234CGMRJFFALDGGD56789";
     private static final SecureRandom random = new SecureRandom();
     
-	public SimulazioneService(UtenteRepository utenteRepository, MedicoRepository medicoRepository, PrenotazioneRepository prenotazioneRepository) {
+	public AppService(UtenteRepository utenteRepository, MedicoRepository medicoRepository, PrenotazioneRepository prenotazioneRepository) {
 		this.utenteRepository = utenteRepository;
 		this.medicoRepository = medicoRepository;
 		this.prenotazioneRepository = prenotazioneRepository;
@@ -53,8 +53,8 @@ public class SimulazioneService {
 		return this.utenteRepository.findById(id).orElse(null);
 	}
 	
-	public List<Prenotazione> findPrenotazioniByIdUtente(Long id) {
-		return this.prenotazioneRepository.findByUtenteId(id);
+	public List<Prenotazione> findPrenotazioniByEmailUtente(String email) {
+		return this.prenotazioneRepository.findByUtenteEmail(email);
 	}
 
 	public Utente findUserByEmail(String email) {

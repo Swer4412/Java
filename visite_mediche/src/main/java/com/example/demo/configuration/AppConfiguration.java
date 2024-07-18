@@ -4,45 +4,47 @@ import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.example.demo.jwt.CustomJwtDecoder;
-
+import com.example.demo.jwt.JwtAuthenticationFilter;
+import com.example.demo.jwt.JwtTokenUtil;
 
 @Configuration
-@EnableMethodSecurity
+@EnableWebSecurity
 public class AppConfiguration {
-	
-	private final CustomJwtDecoder customJwtDecoder = new CustomJwtDecoder();
-	
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+    private final JwtTokenUtil jwtTokenUtil;
+
+    public AppConfiguration(JwtTokenUtil jwtTokenUtil) {
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
             .cors(cors -> cors.configurationSource(apiConfigurationSource()))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**").permitAll()
+            .authorizeRequests()
+                .requestMatchers("/api/v1/auth/login", "/api/v1/auth/register").permitAll()
                 .anyRequest().authenticated()
-            )
-            .oauth2ResourceServer(oauth2 -> oauth2
-                .jwt(jwt -> jwt.decoder(customJwtDecoder))
-            );
+            .and()
+            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-	
-	
 
-	CorsConfigurationSource apiConfigurationSource() {
+    CorsConfigurationSource apiConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 //		abilito tutti i domini ad eseguire chiamate verso il server
 //		attenzione per * significa tutti, in realtà dovrebbero essere elencati
@@ -54,10 +56,9 @@ public class AppConfiguration {
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-	
-	@Bean
-	PasswordEncoder passEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
+    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
