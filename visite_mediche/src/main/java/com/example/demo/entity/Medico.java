@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "medici")
 public class Medico {
-	
+
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "id", nullable = false)
@@ -37,8 +37,6 @@ public class Medico {
 		@OneToMany(mappedBy="medico")
 		private List<Prenotazione> prenotazioni;
 		
-
-
 		public Long getId() {
 			return id;
 		}

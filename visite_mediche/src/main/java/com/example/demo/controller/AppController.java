@@ -19,11 +19,13 @@ public class AppController {
     
     @PostMapping("/prenota")
     public String savePrenotazione(@RequestBody Prenotazione prenotazione, Authentication authentication, HttpServletResponse response) {
-        if (prenotazione.getOraVisita() > 18 || prenotazione.getOraVisita() < 8) {
+        //Controlli sui parametri passati nel corpo
+    	if (prenotazione.getOraVisita() > 18 || prenotazione.getOraVisita() < 8) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "";
         }
         
+    	//Setto la mail dell'utente che ha fatto la prenotazione
         String email = authentication.getName();
         prenotazione.getUtente().setEmail(email);
         
@@ -31,7 +33,7 @@ public class AppController {
         
         return prenotazione.getCodiceConferma();
     }
-    
+    	
     @GetMapping("/prenotazioni")
     public List<Prenotazione> findPrenotazioniByEmailUtente(Authentication authentication) {
         String email = authentication.getName();

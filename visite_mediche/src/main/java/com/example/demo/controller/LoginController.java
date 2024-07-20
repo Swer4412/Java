@@ -9,29 +9,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.LoginData;
 import com.example.demo.entity.Utente;
-import com.example.demo.jwt.JwtTokenUtil;
 import com.example.demo.service.AppService;
+import com.example.demo.service.JwtService;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 public class LoginController {
 
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AppService service;
 
-    public LoginController(JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder, AppService service) {
-        this.jwtTokenUtil = jwtTokenUtil;
+    public LoginController(JwtService jwtService, PasswordEncoder passwordEncoder, AppService service) {
+        this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
         this.service = service;
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> generateToken(@RequestBody LoginData data) {
-        Utente utente = this.service.findUserByEmail(data.getEmail());
+    	//Prendo l'intero oggetto utente in base alla email
+        Utente utente = this.service.findUtenteByEmail(data.getEmail());
         
         if (utente != null && passwordEncoder.matches(data.getPassword(), utente.getPassword())) {
-            String token = jwtTokenUtil.generateToken(data.getEmail(), utente.getRuolo());
+            String token = jwtService.generateToken(data.getEmail()); //Si potrebbe anche gestire il ruolo me per motivi di tempo non posso farlo
             return ResponseEntity.ok(token);
         } else {
             return ResponseEntity.badRequest().body("Invalid email or password");
@@ -40,6 +41,7 @@ public class LoginController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody Utente data) {
+    	//Cripto la password in modo da aumentare la sicurezza
         data.setPassword(this.passwordEncoder.encode(data.getPassword()));
         this.service.saveUtente(data);
         return ResponseEntity.ok("User registered successfully");

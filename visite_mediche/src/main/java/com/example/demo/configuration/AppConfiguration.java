@@ -16,18 +16,34 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.demo.jwt.JwtAuthenticationFilter;
-import com.example.demo.jwt.JwtTokenUtil;
+import com.example.demo.service.JwtService;
 
 @Configuration
 @EnableWebSecurity
 public class AppConfiguration {
 
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtService jwtService;
 
-    public AppConfiguration(JwtTokenUtil jwtTokenUtil) {
-        this.jwtTokenUtil = jwtTokenUtil;
+    public AppConfiguration(JwtService jwtService) {
+        this.jwtService = jwtService;
     }
+    
+    /*@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())  // Disabilita CSRF
+        .cors(cors -> cors.disable())  // Disabilita CORS
+        .authorizeHttpRequests(auth -> auth
+            .anyRequest().authenticated()  // Richiede autenticazione per tutte le richieste
+        )
+        .httpBasic(Customizer.withDefaults())  // Abilita l'autenticazione HTTP Basic
+        .sessionManagement(session -> session
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Mantiene la policy STATELESS
+        );
 
+    return http.build();
+}*/
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -39,7 +55,8 @@ public class AppConfiguration {
                 .requestMatchers("/api/v1/auth/login", "/api/v1/auth/register").permitAll()
                 .anyRequest().authenticated()
             .and()
-            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
+            //Passo il filtro con parametro service per motivi di dipendenze
+            .addFilterBefore(new JwtAuthenticationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

@@ -23,30 +23,20 @@ public class AppService {
 	private static final String CHARACTERS = "01234CGMRJFFALDGGD56789";
     private static final SecureRandom random = new SecureRandom();
     
+    //Inizializzazione di tutte le repository 
 	public AppService(UtenteRepository utenteRepository, MedicoRepository medicoRepository, PrenotazioneRepository prenotazioneRepository) {
 		this.utenteRepository = utenteRepository;
 		this.medicoRepository = medicoRepository;
 		this.prenotazioneRepository = prenotazioneRepository;
 	}
 	
+	//FUNZIONI GET
 	public List<Prenotazione> findAllPrenotazioni(){
 		return this.prenotazioneRepository.findAll();
 	}
 	
 	public List<Medico> findAllMedici(){
 		return this.medicoRepository.findAll();
-	}
-	
-	public String savePrenotazione(Prenotazione prenotazione) {
-		prenotazione.setCodiceConferma(generateRandomString());
-				
-		this.prenotazioneRepository.save(prenotazione);
-		
-		return prenotazione.getCodiceConferma();
-	}
-	
-	public void saveUtente(Utente utente) {	
-		this.utenteRepository.save(utente);
 	}
 	
 	public Utente findUserById(Long id) {
@@ -57,9 +47,24 @@ public class AppService {
 		return this.prenotazioneRepository.findByUtenteEmail(email);
 	}
 
-	public Utente findUserByEmail(String email) {
+	public Utente findUtenteByEmail(String email) {
 		return this.utenteRepository.findByEmail(email);
 	}
+	
+	
+	//FUNZIONI CREATE
+	public String savePrenotazione(Prenotazione prenotazione) {
+		prenotazione.setCodiceConferma(generateRandomString());
+
+		this.prenotazioneRepository.save(prenotazione);
+		
+		return prenotazione.getCodiceConferma();
+	}
+	
+	public void saveUtente(Utente utente) {	
+		this.utenteRepository.save(utente);
+	}
+	
 
     public String generateRandomString() {
         int length = 6; // Lunghezza della stringa casuale
