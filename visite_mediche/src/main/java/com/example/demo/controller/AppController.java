@@ -19,13 +19,13 @@ public class AppController {
     
     @PostMapping("/prenota")
     public String savePrenotazione(@RequestBody Prenotazione prenotazione, Authentication authentication, HttpServletResponse response) {
-        //Controlli sui parametri passati nel corpo
+        //Qui vengono effettuati i controlli sulla richiesta fatta
     	if (prenotazione.getOraVisita() > 18 || prenotazione.getOraVisita() < 8) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "";
         }
         
-    	//Setto la mail dell'utente che ha fatto la prenotazione
+    	//Ottengo l'email dal token e salvo quella nella prenotazione
         String email = authentication.getName();
         prenotazione.getUtente().setEmail(email);
         
@@ -36,12 +36,14 @@ public class AppController {
     	
     @GetMapping("/prenotazioni")
     public List<Prenotazione> findPrenotazioniByEmailUtente(Authentication authentication) {
+    	//Ottengo l'email dal corpo del token
         String email = authentication.getName();
         return this.service.findPrenotazioniByEmailUtente(email);
     }
     
     @GetMapping("/medici")
     public List<Medico> findAllMedici() {
+    	//Non serve qui ottenere l'email dal jwt dato che i dati sono uguali per tutti
         return this.service.findAllMedici();
     }
 }

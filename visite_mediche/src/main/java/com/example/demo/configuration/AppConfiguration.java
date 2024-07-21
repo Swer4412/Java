@@ -28,6 +28,7 @@ public class AppConfiguration {
         this.jwtService = jwtService;
     }
     
+    //Senza filtri di sicurezza
     /*@Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http

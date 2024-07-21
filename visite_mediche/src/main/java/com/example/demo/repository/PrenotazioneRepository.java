@@ -11,10 +11,10 @@ import com.example.demo.entity.Prenotazione;
 @Repository
 public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Integer> {
 	
-	//Dato che esiste un campo chiamato id_utente, posso creare questa funzione chiamata FindByIdUtente perché
+	//Dato che esiste un campo chiamato email, posso creare questa funzione chiamata FindByIdUtente perché
 	//Jpa sa creare query dai nomi messi nelle funzioni:
-	//Findby crea una query che fa una select,  IdUtente serve per specificare su quale colonna filtrare con il 
-	//parametro passato in input (idUtente)
-	List<Prenotazione> findByUtenteEmail(String utenteEmail); //idUtente é una varaibile quindi puo avere il nome che vuoi
+	//Findby crea una query che fa una select, email serve per specificare su quale colonna filtrare con il 
+	//parametro passato in input (email)
+	List<Prenotazione> findByUtenteEmail(String email);
 	
 }

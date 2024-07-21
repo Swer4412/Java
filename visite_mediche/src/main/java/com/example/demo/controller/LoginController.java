@@ -44,6 +44,6 @@ public class LoginController {
     	//Cripto la password in modo da aumentare la sicurezza
         data.setPassword(this.passwordEncoder.encode(data.getPassword()));
         this.service.saveUtente(data);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok("");
     }
 }

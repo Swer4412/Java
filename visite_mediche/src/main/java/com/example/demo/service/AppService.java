@@ -65,20 +65,13 @@ public class AppService {
 		this.utenteRepository.save(utente);
 	}
 	
-
+	//FUNZIONI HELPER
     public String generateRandomString() {
-        int length = 6; // Lunghezza della stringa casuale
+        int length = 6; // Lunghezza della stringa
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
             sb.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
         }
         return sb.toString();
     }
-
-
-	
-	
-	
-	
-	
 }
